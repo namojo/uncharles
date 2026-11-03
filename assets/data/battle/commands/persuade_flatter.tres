@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattleCommand" format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_command.gd" id="1_command"]
+
+[resource]
+script = ExtResource("1_command")
+id = &"persuade_flatter"
+display_name = "클래식 모델 칭찬"
+kind = 1
+power = 0
+persuade_amount = 30
+guard_percent = 0
+result_line = "\"고객님은 요즘 보기 드문 클래식 모델이십니다.\" 프로스티가 문을 반쯤 열고 으쓱했다. 설득 +{persuade}."

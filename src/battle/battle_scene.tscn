@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_ui.gd" id="1_ui"]
+[ext_resource type="Script" path="res://src/battle/battle_command.gd" id="2_command"]
+[ext_resource type="Resource" path="res://assets/data/battle/enemies/dummy_enemy.tres" id="3_enemy"]
+[ext_resource type="Resource" path="res://assets/data/battle/commands/attack_silver_tray.tres" id="4_a1"]
+[ext_resource type="Resource" path="res://assets/data/battle/commands/attack_perfect_cleaning.tres" id="5_a2"]
+[ext_resource type="Resource" path="res://assets/data/battle/commands/persuade_manual.tres" id="6_p1"]
+[ext_resource type="Resource" path="res://assets/data/battle/commands/persuade_flatter.tres" id="7_p2"]
+[ext_resource type="Resource" path="res://assets/data/battle/commands/persuade_plead.tres" id="8_p3"]
+[ext_resource type="Resource" path="res://assets/data/battle/commands/defend_bow.tres" id="9_d1"]
+[ext_resource type="Texture2D" path="res://assets/art/battle/charles.png" id="10_charles"]
+[ext_resource type="Resource" path="res://assets/data/ui/ui_palette.tres" id="11_palette"]
+[ext_resource type="Texture2D" path="res://assets/art/backgrounds/kitchen.png" id="12_kitchen"]
+
+[node name="BattleScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ui")
+enemy = ExtResource("3_enemy")
+charles_portrait = ExtResource("10_charles")
+palette = ExtResource("11_palette")
+background = ExtResource("12_kitchen")
+commands = Array[ExtResource("2_command")]([ExtResource("4_a1"), ExtResource("5_a2"), ExtResource("6_p1"), ExtResource("7_p2"), ExtResource("8_p3"), ExtResource("9_d1")])

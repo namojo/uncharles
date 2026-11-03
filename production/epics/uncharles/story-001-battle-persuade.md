@@ -1,12 +1,12 @@
 # Story 001: 턴제 전투 + 설득 커맨드
 
 > **Epic**: Uncharles MVP
-> **Status**: Ready
+> **Status**: In Progress
 > **Layer**: Core
 > **Type**: Logic
 > **Estimate**: L
 > **Manifest Version**: N/A (minimal — no control manifest)
-> **Last Updated**: —
+> **Last Updated**: 2026-11-03
 
 ## Context
 
@@ -63,12 +63,19 @@
 - `src/battle/battle_state.gd`
 - `src/battle/battle_command.gd`
 - `src/battle/battle_enemy.gd`
-- `src/battle/battle_scene.tscn`, `src/battle/battle_ui.gd`
-- `assets/data/battle/commands/*.tres`, `assets/data/battle/enemies/dummy_enemy.tres`
-- `tests/unit/battle/battle_turn_test.gd`
-- `tests/unit/battle/battle_persuade_test.gd`
-
----
+- `src/battle/battle_ui.gd`
+- `src/battle/battle_scene.tscn`
+- `assets/data/battle/enemies/dummy_enemy.tres`
+- `assets/data/battle/commands/attack_silver_tray.tres`
+- `assets/data/battle/commands/attack_perfect_cleaning.tres`
+- `assets/data/battle/commands/persuade_manual.tres`
+- `assets/data/battle/commands/persuade_flatter.tres`
+- `assets/data/battle/commands/persuade_plead.tres`
+- `assets/data/battle/commands/defend_bow.tres`
+- `assets/art/battle/charles.png`
+- `assets/art/battle/frosty.png`
+- `src/battle/*.gd.uid` (Godot-generated, committed with their scripts)
+- `assets/art/battle/*.png.import` (Godot-generated)
 
 ## QA Test Cases
 

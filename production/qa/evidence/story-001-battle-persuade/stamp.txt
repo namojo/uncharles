@@ -1,0 +1,14 @@
+Reviewed-Content-Hash: src/battle/battle_state.gd 7d940390b3636d844f50ca22774ca0fa42e62445
+Reviewed-Content-Hash: src/battle/battle_command.gd b4aff1db595a544edc27fa83fd1d77af7e0d3ec7
+Reviewed-Content-Hash: src/battle/battle_enemy.gd 7a6ef02caf6858bcb0f5c9f2a598b2334aba96a4
+Reviewed-Content-Hash: src/battle/battle_ui.gd ebe19b0b5d8828d317d864085212a9b647c9f7de
+Reviewed-Content-Hash: src/battle/battle_scene.tscn 7b1f8237242a36a0a115ae6737fa6caa25986721
+Reviewed-Content-Hash: assets/data/battle/enemies/dummy_enemy.tres 977e1fda0929b905a5a1e1abbddb7949cc7bdf75
+Reviewed-Content-Hash: assets/data/battle/commands/attack_silver_tray.tres 92970681946b5ba5a46c6c85e9972b3e735574ba
+Reviewed-Content-Hash: assets/data/battle/commands/attack_perfect_cleaning.tres c8d81eaf92953dd064b25e43258340003bcfcd85
+Reviewed-Content-Hash: assets/data/battle/commands/persuade_manual.tres 29825c66c22bc7581b5d6a03bd150c879cf56a5e
+Reviewed-Content-Hash: assets/data/battle/commands/persuade_flatter.tres 4b783d62f353da183046ea1225679496e9b0366f
+Reviewed-Content-Hash: assets/data/battle/commands/persuade_plead.tres 063fc961bbfcac70e5ca4030962f6081b6585ea3
+Reviewed-Content-Hash: assets/data/battle/commands/defend_bow.tres a1fc835d240fccede0e3112418fde48292059982
+Reviewed-Content-Hash: assets/art/battle/charles.png d0230f48efe3fca938605563ff46e71a70e167b5
+Reviewed-Content-Hash: assets/art/battle/frosty.png 08012c353210df313ed7c344a7abd92d16458ab2

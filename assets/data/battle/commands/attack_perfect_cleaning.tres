@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattleCommand" format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_command.gd" id="1_command"]
+
+[resource]
+script = ExtResource("1_command")
+id = &"attack_perfect_cleaning"
+display_name = "집사식 완벽 청소"
+kind = 0
+power = 20
+persuade_amount = 0
+guard_percent = 0
+result_line = "찰스가 프로스티를 구석구석 닦아냈다. 너무 완벽해서 오히려 아팠다. {damage}의 피해."

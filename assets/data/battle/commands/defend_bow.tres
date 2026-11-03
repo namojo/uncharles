@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattleCommand" format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_command.gd" id="1_command"]
+
+[resource]
+script = ExtResource("1_command")
+id = &"defend_bow"
+display_name = "공손한 차렷"
+kind = 2
+power = 0
+persuade_amount = 0
+guard_percent = 60
+result_line = "찰스가 90도로 허리를 숙였다. 다음 공격의 충격이 {guard}% 줄어든다."

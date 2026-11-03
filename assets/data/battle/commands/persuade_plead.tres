@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BattleCommand" format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_command.gd" id="1_command"]
+
+[resource]
+script = ExtResource("1_command")
+id = &"persuade_plead"
+display_name = "눈물 어린 호소"
+kind = 1
+power = 0
+persuade_amount = 35
+guard_percent = 0
+result_line = "\"저도 버림받았습니다.\" 찰스의 고백에 프로스티의 제빙기가 멈칫했다. 설득 +{persuade}."

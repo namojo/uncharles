@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BattleEnemy" format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_enemy.gd" id="1_enemy"]
+[ext_resource type="Texture2D" path="res://assets/art/battle/frosty.png" id="2_portrait"]
+
+[resource]
+script = ExtResource("1_enemy")
+id = &"dummy_enemy"
+display_name = "폭주 냉장고 '프로스티'"
+portrait = ExtResource("2_portrait")
+max_hp = 60
+attack_power = 15
+persuade_max = 100
+intro_line = "문을 열자 냉장고가 포효했다. \"유통기한은 내가 정한다!\""
+attack_lines = PackedStringArray("프로스티가 유통기한 지난 요거트를 던졌다! 배터리 {damage}% 감소.", "프로스티가 냉동실 문으로 찰스를 끼웠다. \"신선도 검사다!\" 배터리 {damage}% 감소.", "프로스티가 제빙기에서 얼음을 난사했다. 배터리 {damage}% 감소.")
+defeated_line = "프로스티의 컴프레서가 멎었다. 안에 있던 요거트가 조용히 상하기 시작했다."
+persuaded_line = "프로스티가 문을 천천히 닫았다. \"...알겠어. 안의 케이크는 네가 먹어. 유통기한은 어제였지만.\""
+depleted_line = "찰스의 눈이 꺼졌다. 마지막으로 본 것은 유통기한 임박 스티커였다."
