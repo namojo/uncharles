@@ -10,4 +10,4 @@ kind = 1
 power = 0
 persuade_amount = 25
 guard_percent = 0
-result_line = "찰스가 소비자 상담 매뉴얼을 낭독했다. 프로스티의 모터가 머쓱하게 웅웅거렸다. 설득 +{persuade}."
+result_line = "찰스가 소비자 상담 매뉴얼을 낭독했다. {enemy}의 모터가 머쓱하게 웅웅거렸다. 설득 +{persuade}."

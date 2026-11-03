@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BattleEnemy" format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_enemy.gd" id="1_enemy"]
+[ext_resource type="Texture2D" path="res://assets/art/battle/fact_scale.png" id="2_portrait"]
+
+[resource]
+script = ExtResource("1_enemy")
+id = &"fact_scale"
+portrait = ExtResource("2_portrait")
+display_name = "스마트 체중계 '팩트'"
+short_name = "팩트"
+max_hp = 40
+attack_power = 10
+persuade_max = 80
+intro_line = "체중계가 불을 켰다. \"올라오세요. 숫자는 거짓말을 안 합니다. 쟁반도 같이요.\""
+attack_lines = PackedStringArray("\"쟁반 빼면 반칙입니다!\" 팩트가 숫자를 외쳤다. 배터리 {damage}% 감소.", "\"어제보다 무겁습니다!\" 처음 재는 것이었다. 배터리 {damage}% 감소.", "\"BMI 판정: 연미복!\" 팩트가 아무 숫자나 외쳤다. 배터리 {damage}% 감소.")
+defeated_line = "팩트의 액정이 꺼졌다. 마지막 숫자는 0.0이었다. 거짓말은 아니었다."
+persuaded_line = "팩트가 조용히 측정을 마쳤다. \"사용자 2명 등록. ...이 집에서 처음입니다.\""
+depleted_line = "찰스가 팩트 위로 쓰러졌다. \"측정 불가. 너무 무겁습니다. 쟁반 포함.\""

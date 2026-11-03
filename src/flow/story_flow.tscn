@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/flow/story_flow.gd" id="1_flow"]
+[ext_resource type="Resource" path="res://assets/data/ui/ui_palette.tres" id="2_palette"]
+[ext_resource type="Resource" path="res://assets/data/audio/sound_bank.tres" id="3_sounds"]
+[ext_resource type="PackedScene" path="res://src/battle/battle_scene.tscn" id="4_battle"]
+[ext_resource type="PackedScene" path="res://src/dialogue/dialogue_box.tscn" id="5_box"]
+
+[node name="StoryFlow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_flow")
+palette = ExtResource("2_palette")
+sound_bank = ExtResource("3_sounds")
+battle_scene = ExtResource("4_battle")
+
+[node name="DialogueBox" parent="." instance=ExtResource("5_box")]
+layout_mode = 1

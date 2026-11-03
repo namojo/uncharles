@@ -10,4 +10,4 @@ kind = 0
 power = 15
 persuade_amount = 0
 guard_percent = 0
-result_line = "찰스가 은쟁반으로 프로스티의 문짝을 후려쳤다. 땡— 하는 맑은 소리와 함께 {damage}의 피해."
+result_line = "찰스가 은쟁반을 휘둘렀다. {enemy}에게 땡— 하는 맑은 소리와 함께 {damage}의 피해."

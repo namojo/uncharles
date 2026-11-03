@@ -1,0 +1,96 @@
+{
+ "entry": "prologue_01",
+ "title_scene": "res://src/title/title_screen.tscn",
+ "battery_max": 100,
+ "reboot_battery": 100,
+ "money_loss_ratio": 0.2,
+ "charge_cost": 100,
+ "actions": [
+  "accept_job",
+  "charge_battery",
+  "save_game"
+ ],
+ "stub_toast": "(소개소 기능은 Story 003에서 구현)",
+ "end_card": {
+  "text": "여기까지가 세로 슬라이스입니다.",
+  "hint": "클릭 또는 Enter: 타이틀로"
+ },
+ "jobs": [
+  {
+   "id": "job1_narae",
+   "board_scene": "agency_board",
+   "return_scene": "agency_return_job1",
+   "reward": 300
+  }
+ ],
+ "end_routes": {
+  "agency_hub": {
+   "map": "agency_hub"
+  },
+  "job1_entrance": {
+   "scene": "job1_entrance"
+  },
+  "job1_living_intro": {
+   "scene": "job1_living"
+  },
+  "job1_living": {
+   "map": "job1_living"
+  },
+  "return_to_agency": {
+   "special": "return_to_agency"
+  }
+ },
+ "reboot_scene": "agency_after_reboot",
+ "maps": {
+  "agency_hub": {
+   "title": "소개소",
+   "items": [
+    {
+     "label": "게시판",
+     "scene": "agency_board"
+    },
+    {
+     "label": "코인 충전기",
+     "scene": "agency_charger"
+    },
+    {
+     "label": "저장 단말",
+     "scene": "agency_save"
+    },
+    {
+     "label": "벽 공지",
+     "scene": "agency_kiosk_notice"
+    },
+    {
+     "label": "소개소를 나간다(데모 종료)",
+     "action": "end_demo"
+    }
+   ]
+  },
+  "job1_living": {
+   "title": "1207호 거실",
+   "items": [
+    {
+     "label": "침대 옆 체중계",
+     "scene": "job1_fact",
+     "once": true
+    },
+    {
+     "label": "부엌 미닫이문",
+     "scene": "job1_kitchen_door"
+    }
+   ]
+  }
+ },
+ "backdrops": {
+  "backdrop_door_rain": "res://assets/art/backgrounds/prologue_door.png",
+  "backdrop_door_after": "res://assets/art/backgrounds/prologue_door.png",
+  "backdrop_road_to_agency": "res://assets/art/backgrounds/prologue_road.png",
+  "prologue_*": "res://assets/art/backgrounds/prologue_door.png",
+  "agency_*": "res://assets/art/backgrounds/agency_interior.png",
+  "job1_entrance": "res://assets/art/backgrounds/apt_entrance.png",
+  "job1_living*": "res://assets/art/backgrounds/apt_living.png",
+  "job1_fact*": "res://assets/art/backgrounds/apt_living.png",
+  "job1_*": "res://assets/art/backgrounds/kitchen.png"
+ }
+}

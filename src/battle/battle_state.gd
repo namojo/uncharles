@@ -73,10 +73,12 @@ func player_act(command: BattleCommand) -> bool:
 			persuade_gauge = mini(enemy.persuade_max, persuade_gauge + command.persuade_amount)
 		BattleCommand.Kind.DEFEND:
 			guard_percent = clampi(command.guard_percent, 0, 100)
-	line_logged.emit(command.result_line.format({
+	var line: String = enemy.command_lines.get(String(command.id), command.result_line)
+	line_logged.emit(line.format({
 		"damage": command.power,
 		"persuade": command.persuade_amount,
 		"guard": command.guard_percent,
+		"enemy": enemy.short_name if not enemy.short_name.is_empty() else enemy.display_name,
 	}))
 	if enemy_hp == 0:
 		_end(Result.DEFEATED)

@@ -1,0 +1,11 @@
+Reviewed-Content-Hash: src/dialogue/affinity_store.gd 6efa0876ea3739cb8d17a9e17d3a720c8f642fcb
+Reviewed-Content-Hash: src/dialogue/choice_list.gd 6c70d8e6d482d35cb5d5f40315851a682b1d14f2
+Reviewed-Content-Hash: src/dialogue/dialogue_box.gd 37d561132659ff6881951fa704fb9a4b4869bbff
+Reviewed-Content-Hash: src/dialogue/dialogue_condition.gd 2e24b06f946031eb6bfa0011789564cb770da0ee
+Reviewed-Content-Hash: src/dialogue/dialogue_data.gd 64dfdc3ac609b4ff53ab8a75f09f31abb9f37bba
+Reviewed-Content-Hash: src/dialogue/dialogue_runner.gd d339dca7cedd95a5d80b353b1e0f9e1ca12cf55f
+Reviewed-Content-Hash: src/flow/story_flow.gd c760e3b223615472a3311d4b5a8fed1c4171211e
+Reviewed-Content-Hash: src/battle/battle_ui.gd e0ae5369e2f7dea5cfa2ecbbe40053d87bced5d1
+Reviewed-Content-Hash: src/title/title_screen.gd 3e1f8401dd1a047bbd8b08966a859a33566186b6
+Reviewed-Content-Hash: tools/dialogue/build_dialogue.py e425612bfa7db3ce03a8fca07e7c668e575c6aa7
+Reviewed-Content-Hash: assets/data/dialogue/flow.json f57c2aafc717340721d92cae76968d00ace61dee

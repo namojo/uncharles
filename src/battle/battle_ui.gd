@@ -1,3 +1,4 @@
+class_name BattleUI
 extends Control
 ## Battle screen. Presentation only: it feeds Charles' command choices into
 ## BattleState and shows what the rules report. Implements Story 001
@@ -8,7 +9,9 @@ extends Control
 ## and touch: hovering a command row moves the cursor, clicking or tapping it
 ## picks. On the result screen ui_accept or a click/tap restarts the scene and
 ## ui_cancel quits (quit is not offered in a web build). This is the standalone
-## test harness; a caller embedding the scene listens to `battle_ended` instead.
+## test harness. A host embedding the scene (Story 002's story flow) sets
+## `hosted`, `enemy` and `battery_start` before adding it, listens to
+## `battle_ended` / `result_acknowledged`, and reads `battery()` afterwards.
 ##
 ## Debug hook: pass `--commands=id1,id2,...` after `--` to play those command
 ## ids automatically through the same choice path, e.g.
@@ -18,6 +21,8 @@ extends Control
 
 ## Re-emits BattleState.battle_ended for whoever hosts this scene (Story 002).
 signal battle_ended(result: BattleState.Result)
+## Hosted only: the player confirmed the result screen; the host removes the scene.
+signal result_acknowledged
 
 const SCRIPT_ARG_PREFIX: String = "--commands="
 const CURSOR_MARK: String = "▶"
@@ -38,6 +43,9 @@ const STAGE_INSET: int = 200
 
 ## Enemy for this fight.
 @export var enemy: BattleEnemy
+## True when another scene hosts this battle: confirming the result emits
+## `result_acknowledged` instead of restarting, and Esc does not quit.
+@export var hosted: bool = false
 ## Charles' battle sprite. Empty shows a gray box instead.
 @export var charles_portrait: Texture2D
 ## Charles' commands, in menu order.
@@ -120,7 +128,9 @@ func _ready() -> void:
 ## _unhandled_input because the panels under the finger consume mouse events.
 func _input(event: InputEvent) -> void:
 	if _can_restart() and _is_left_press(event):
-		get_tree().reload_current_scene()
+		_leave_result()
+		# The host shows dialogue at once; keep this press from also advancing it.
+		get_viewport().set_input_as_handled()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -130,8 +140,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not _can_restart():
 			return
 		if event.is_action_pressed(&"ui_accept"):
-			get_tree().reload_current_scene()
-		elif event.is_action_pressed(&"ui_cancel") and not OS.has_feature("web"):
+			_leave_result()
+			# The host shows dialogue at once; keep this press from also advancing it.
+			get_viewport().set_input_as_handled()
+		elif event.is_action_pressed(&"ui_cancel") and not hosted and not OS.has_feature("web"):
 			get_tree().quit()
 		return
 	if event.is_action_pressed(&"ui_down", true):
@@ -159,6 +171,21 @@ func _choose(index: int) -> void:
 	if _state.is_ended():
 		await _show_result()
 	_busy = false
+
+
+## Charles' battery now (read by a host after the fight to carry it on).
+func battery() -> int:
+	return _state.battery
+
+
+## The result screen was confirmed: restart the standalone harness, or hand
+## control back to the host (once).
+func _leave_result() -> void:
+	if not hosted:
+		get_tree().reload_current_scene()
+		return
+	_result_shown = false
+	result_acknowledged.emit()
 
 
 func _snapshot() -> Dictionary:
@@ -424,6 +451,8 @@ func _build_ui() -> void:
 	_result_label = _add_label(_result_box, "", palette.font_bold)
 	_result_label.add_theme_font_size_override(&"font_size", palette.size_banner)
 	var hint: String = "탭 또는 Enter: 다시 하기" if OS.has_feature("web") else "클릭 또는 Enter: 다시 하기    Esc: 종료"
+	if hosted:
+		hint = "클릭 또는 Enter: 계속"
 	_result_hint = _add_label(menu_box, hint, palette.font_regular, palette.text_secondary)
 	_result_hint.hide()
 

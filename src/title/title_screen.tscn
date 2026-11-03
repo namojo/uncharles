@@ -18,6 +18,6 @@ script = ExtResource("1_title")
 palette = ExtResource("2_palette")
 background = ExtResource("3_bg")
 logo = ExtResource("4_logo")
-new_game_scene = "res://src/battle/battle_scene.tscn"
+new_game_scene = "res://src/flow/story_flow.tscn"
 sound_bank = ExtResource("5_sounds")
 music = ExtResource("6_music")

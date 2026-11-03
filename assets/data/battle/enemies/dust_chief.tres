@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BattleEnemy" format=3]
+
+[ext_resource type="Script" path="res://src/battle/battle_enemy.gd" id="1_enemy"]
+[ext_resource type="Texture2D" path="res://assets/art/battle/dust_chief.png" id="2_portrait"]
+
+[resource]
+script = ExtResource("1_enemy")
+id = &"dust_chief"
+portrait = ExtResource("2_portrait")
+display_name = "로봇청소기 '먼지대장'"
+short_name = "먼지대장"
+max_hp = 30
+attack_power = 8
+persuade_max = 60
+intro_line = "먼지대장이 찰스의 발목을 들이받았다. \"장애물 감지! 새 장애물입니다. 3년 만입니다.\""
+attack_lines = PackedStringArray("먼지대장이 찰스의 왼쪽 발목을 들이받았다. 배터리 {damage}% 감소.", "먼지대장이 후진했다가 다시 들이받았다. 아까와 같은 자리였다. 배터리 {damage}% 감소.", "먼지대장이 연미복 꼬리를 빨아들였다. \"이물질 감지.\" 배터리 {damage}% 감소.")
+defeated_line = "먼지대장이 뒤집혔다. 바퀴가 허공에 3년 치 동선을 마저 그렸다."
+persuaded_line = "먼지대장이 찰스를 비켜 돌았다. \"동선 갱신 완료. ...장애물 아님. 손님.\""
+depleted_line = "찰스가 쓰러졌다. 먼지대장이 찰스를 장애물로 등록하고 둘레를 돌기 시작했다."

@@ -65,7 +65,7 @@
 - `src/battle/battle_enemy.gd`
 - `src/battle/battle_ui.gd`
 - `src/battle/battle_scene.tscn`
-- `assets/data/battle/enemies/dummy_enemy.tres`
+- `assets/data/battle/enemies/frosty.tres`
 - `assets/data/battle/commands/attack_silver_tray.tres`
 - `assets/data/battle/commands/attack_perfect_cleaning.tres`
 - `assets/data/battle/commands/persuade_manual.tres`

@@ -8,6 +8,9 @@ extends Resource
 
 @export var id: StringName = &""
 @export var display_name: String = ""
+## Name used inside battle text through the {enemy} placeholder. Empty uses
+## display_name.
+@export var short_name: String = ""
 ## Battle sprite. Empty shows a gray box instead.
 @export var portrait: Texture2D
 @export var max_hp: int = 1
@@ -25,3 +28,7 @@ extends Resource
 @export_multiline var persuaded_line: String = ""
 ## Shown when Charles runs out of battery (DEPLETED).
 @export_multiline var depleted_line: String = ""
+## Per-enemy text for Charles' commands: command id (String) -> result line.
+## Overrides the command's own generic result_line against this enemy, with
+## the same placeholders plus {enemy}.
+@export var command_lines: Dictionary = {}

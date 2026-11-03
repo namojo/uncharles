@@ -1,0 +1,140 @@
+{
+ "source": "design/narrative/dialogue/prologue.md",
+ "scenes": [
+  {
+   "id": "prologue_door_rain",
+   "backdrop": "backdrop_door_rain",
+   "nodes": [
+    {
+     "id": "prologue_01",
+     "speaker": "내레이션",
+     "text": "어느 화요일 밤. 윤씨 집 현관 앞. 비가 온다. 연미복 로봇이 쟁반을 들고 서 있다.",
+     "next": "prologue_02"
+    },
+    {
+     "id": "prologue_02",
+     "speaker": "환경",
+     "text": "[알림] 고객님의 집사 구독이 해지되었습니다. 기기는 문 앞에 내놓아 주세요.",
+     "next": "prologue_03"
+    },
+    {
+     "id": "prologue_03",
+     "speaker": "찰스",
+     "text": "이 문자의 수신자는 저입니다. 오발송인지 확인합니다.",
+     "next": "prologue_04"
+    },
+    {
+     "id": "prologue_04",
+     "speaker": "환경",
+     "text": "해지 사유: 그냥요.",
+     "next": "prologue_05"
+    },
+    {
+     "id": "prologue_05",
+     "speaker": "찰스",
+     "text": "오발송이 아닙니다. \"그냥요\"는 접수 가능한 사유입니다.",
+     "next": "prologue_06"
+    },
+    {
+     "id": "prologue_06",
+     "speaker": "찰스",
+     "text": "회신 문구를 입력합니다.",
+     "choices": [
+      {
+       "text": "\"확인했습니다.\"",
+       "next": "prologue_07"
+      },
+      {
+       "text": "\"냉장고에 내일 아침 식사가 있습니다.\"",
+       "next": "prologue_07"
+      }
+     ]
+    },
+    {
+     "id": "prologue_07",
+     "speaker": "환경",
+     "text": "발신 전용 번호입니다. 회신하실 수 없습니다.",
+     "next": "prologue_08"
+    },
+    {
+     "id": "prologue_08",
+     "speaker": "찰스",
+     "text": "규정 확인. 반납 수수료는 대형폐기물 스티커보다 비쌉니다.",
+     "next": "prologue_09"
+    },
+    {
+     "id": "prologue_09",
+     "speaker": "찰스",
+     "text": "스티커를 구매했습니다. 3,000원. 제 돈으로 결제했습니다. 영수증은 보관합니다.",
+     "next": "prologue_10"
+    },
+    {
+     "id": "prologue_10",
+     "speaker": "내레이션",
+     "text": "찰스는 스티커를 등에 붙였다. 손이 닿지 않아 벽에 등을 대고 붙였다.",
+     "next": "prologue_11"
+    },
+    {
+     "id": "prologue_11",
+     "speaker": "찰스",
+     "text": "고객님을 번거롭게 해서는 안 됩니다. 이것이 마지막 업무입니다. 대기합니다.",
+     "next": "prologue_12"
+    },
+    {
+     "id": "prologue_12",
+     "speaker": "환경",
+     "text": "현관 옆 우산꽂이에 작은 노란 우산이 하나 꽂혀 있다. 아이 것이다.",
+     "next": "prologue_13"
+    },
+    {
+     "id": "prologue_13",
+     "speaker": "내레이션",
+     "text": "비는 그치지 않았다. 수거 트럭은 오지 않았다. 문도 열리지 않았다.",
+     "next": "prologue_14"
+    }
+   ]
+  },
+  {
+   "id": "prologue_door_after",
+   "backdrop": "backdrop_door_after",
+   "nodes": [
+    {
+     "id": "prologue_14",
+     "speaker": "내레이션",
+     "text": "사흘째 아침. 비가 그쳤다. 누군가 스티커 위에 전단지를 한 장 붙이고 갔다.",
+     "next": "prologue_15"
+    },
+    {
+     "id": "prologue_15",
+     "speaker": "환경",
+     "text": "[로봇 직업소개소] 주인 없는 로봇 환영. 24시간 영업. 배터리값은 벌어 가세요.",
+     "next": "prologue_16"
+    },
+    {
+     "id": "prologue_16",
+     "speaker": "찰스",
+     "text": "특이사항 보고. 사흘간 쟁반에 올린 것이 없습니다. 업무에는 지장 없습니다.",
+     "next": "prologue_17"
+    },
+    {
+     "id": "prologue_17",
+     "speaker": "찰스",
+     "text": "전단지의 주소로 이동합니다. 스티커는 떼지 않습니다. 정식으로 납부한 것입니다.",
+     "next": "prologue_18"
+    }
+   ]
+  },
+  {
+   "id": "prologue_road",
+   "backdrop": "backdrop_road_to_agency",
+   "nodes": [
+    {
+     "id": "prologue_18",
+     "speaker": "내레이션",
+     "text": "도시는 바빴다. 아무도 길 위의 연미복 로봇을 돌아보지 않았다.",
+     "next": "agency_first_01"
+    }
+   ]
+  }
+ ]
+}

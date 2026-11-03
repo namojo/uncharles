@@ -10,4 +10,4 @@ kind = 1
 power = 0
 persuade_amount = 35
 guard_percent = 0
-result_line = "\"저도 버림받았습니다.\" 찰스의 고백에 프로스티의 제빙기가 멈칫했다. 설득 +{persuade}."
+result_line = "\"저도 버림받았습니다.\" 찰스의 고백에 {enemy}이(가) 멈칫했다. 설득 +{persuade}."

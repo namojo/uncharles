@@ -16,7 +16,7 @@ const LOGO_DELAY_SEC: float = 0.6
 @export var palette: UiPalette
 @export var background: Texture2D
 @export var logo: Texture2D
-## Scene "새 게임" opens. Until the agency hub exists (Story 003) it is the battle.
+## Scene "새 게임" opens: the story flow, which starts with the prologue (Story 002).
 @export_file("*.tscn") var new_game_scene: String = ""
 @export var tagline: String = "버림받은 집사 로봇의 구직 RPG"
 @export var footer: String = "v0.1 프로토타입"

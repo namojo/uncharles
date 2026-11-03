@@ -1,0 +1,7 @@
+{
+ "steps": {"++": 2, "+": 1, "0": 0, "−": -1},
+ "thresholds": {"threshold_narae_warm": 3},
+ "candidates": ["narae"],
+ "counter_defaults": {"jobs_completed": 0, "reboot_count": 0, "money": 500, "battery": 100},
+ "placeholders": ["money", "reward", "money_lost", "reboot_count", "charge_cost"]
+}

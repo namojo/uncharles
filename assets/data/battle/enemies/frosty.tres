@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("1_enemy")
-id = &"dummy_enemy"
+id = &"frosty"
 display_name = "폭주 냉장고 '프로스티'"
+short_name = "프로스티"
 portrait = ExtResource("2_portrait")
 max_hp = 60
 attack_power = 15
@@ -16,3 +17,10 @@ attack_lines = PackedStringArray("프로스티가 유통기한 지난 요거트�
 defeated_line = "프로스티의 컴프레서가 멎었다. 안에 있던 요거트가 조용히 상하기 시작했다."
 persuaded_line = "프로스티가 문을 천천히 닫았다. \"...알겠어. 안의 케이크는 네가 먹어. 유통기한은 어제였지만.\""
 depleted_line = "찰스의 눈이 꺼졌다. 마지막으로 본 것은 유통기한 임박 스티커였다."
+command_lines = {
+"attack_perfect_cleaning": "찰스가 프로스티를 구석구석 닦아냈다. 너무 완벽해서 오히려 아팠다. {damage}의 피해.",
+"attack_silver_tray": "찰스가 은쟁반으로 프로스티의 문짝을 후려쳤다. 땡— 하는 맑은 소리와 함께 {damage}의 피해.",
+"persuade_flatter": "\"고객님은 요즘 보기 드문 클래식 모델이십니다.\" 프로스티가 문을 반쯤 열고 으쓱했다. 설득 +{persuade}.",
+"persuade_manual": "찰스가 소비자 상담 매뉴얼을 낭독했다. 프로스티의 모터가 머쓱하게 웅웅거렸다. 설득 +{persuade}.",
+"persuade_plead": "\"저도 버림받았습니다.\" 찰스의 고백에 프로스티의 제빙기가 멈칫했다. 설득 +{persuade}."
+}

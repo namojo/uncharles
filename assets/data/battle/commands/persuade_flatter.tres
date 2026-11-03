@@ -10,4 +10,4 @@ kind = 1
 power = 0
 persuade_amount = 30
 guard_percent = 0
-result_line = "\"고객님은 요즘 보기 드문 클래식 모델이십니다.\" 프로스티가 문을 반쯤 열고 으쓱했다. 설득 +{persuade}."
+result_line = "\"고객님은 요즘 보기 드문 클래식 모델이십니다.\" {enemy}의 기세가 조금 누그러졌다. 설득 +{persuade}."

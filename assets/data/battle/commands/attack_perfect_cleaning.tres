@@ -10,4 +10,4 @@ kind = 0
 power = 20
 persuade_amount = 0
 guard_percent = 0
-result_line = "찰스가 프로스티를 구석구석 닦아냈다. 너무 완벽해서 오히려 아팠다. {damage}의 피해."
+result_line = "찰스가 {enemy}의 구석구석을 닦아냈다. 너무 완벽해서 오히려 아팠다. {damage}의 피해."
