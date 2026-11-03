@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UiPalette" format=3]
+
+[ext_resource type="Script" path="res://src/ui/ui_palette.gd" id="1_palette"]
+[ext_resource type="FontFile" path="res://assets/fonts/galmuri/Galmuri11.ttf" id="2_regular"]
+[ext_resource type="FontFile" path="res://assets/fonts/galmuri/Galmuri11-Bold.ttf" id="3_bold"]
+
+[resource]
+script = ExtResource("1_palette")
+font_regular = ExtResource("2_regular")
+font_bold = ExtResource("3_bold")
