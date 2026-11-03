@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="SoundBank" format=3]
+
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/confirm.wav" id="1_aql1l"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/cursor.wav" id="2_spxq2"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/enemy_attack.wav" id="3_mgm5h"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/enemy_down.wav" id="4_iwgtd"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/guard.wav" id="5_n85gh"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/hit.wav" id="6_xhohv"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/hurt.wav" id="7_h5ldh"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/persuade.wav" id="8_est2f"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/power_down.wav" id="9_huoia"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/swing.wav" id="10_5sil0"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/victory.wav" id="11_nq0in"]
+[ext_resource type="Script" path="res://src/audio/sound_bank.gd" id="12_v7ysj"]
+
+[resource]
+script = ExtResource("12_v7ysj")
+events = {
+&"confirm": ExtResource("1_aql1l"),
+&"cursor": ExtResource("2_spxq2"),
+&"enemy_attack": ExtResource("3_mgm5h"),
+&"enemy_down": ExtResource("4_iwgtd"),
+&"guard": ExtResource("5_n85gh"),
+&"hit": ExtResource("6_xhohv"),
+&"hurt": ExtResource("7_h5ldh"),
+&"persuade": ExtResource("8_est2f"),
+&"power_down": ExtResource("9_huoia"),
+&"swing": ExtResource("10_5sil0"),
+&"victory": ExtResource("11_nq0in")
+}

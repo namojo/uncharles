@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" path="res://assets/art/battle/charles.png" id="10_charles"]
 [ext_resource type="Resource" path="res://assets/data/ui/ui_palette.tres" id="11_palette"]
 [ext_resource type="Texture2D" path="res://assets/art/backgrounds/kitchen.png" id="12_kitchen"]
+[ext_resource type="Resource" path="res://assets/data/audio/sound_bank.tres" id="13_sounds"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/battle_theme.wav" id="14_music"]
 
 [node name="BattleScene" type="Control"]
 layout_mode = 3
@@ -25,4 +27,6 @@ enemy = ExtResource("3_enemy")
 charles_portrait = ExtResource("10_charles")
 palette = ExtResource("11_palette")
 background = ExtResource("12_kitchen")
+sound_bank = ExtResource("13_sounds")
+music = ExtResource("14_music")
 commands = Array[ExtResource("2_command")]([ExtResource("4_a1"), ExtResource("5_a2"), ExtResource("6_p1"), ExtResource("7_p2"), ExtResource("8_p3"), ExtResource("9_d1")])

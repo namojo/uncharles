@@ -55,26 +55,46 @@ const STAGE_INSET: int = 200
 ## How long the result screen ignores restart input, so a double tap on the
 ## winning command does not skip the result.
 @export var result_input_delay_sec: float = 0.5
+## Audio event id -> sound ("hit", "persuade", ...). Empty plays no effects.
+@export var sound_bank: SoundBank
+## Looping battle music. Empty plays none.
+@export var music: AudioStream
+## Battery at or below this percent blinks its gauge (art bible 7.9: low power).
+@export var low_battery_percent: int = 25
+
+## Low-battery gauge blink half-period (art bible 7.9: 400 ms).
+const LOW_BATTERY_BLINK_SEC: float = 0.4
+## Persuade-full blink before the result banner (art bible 7.9: twice).
+const PERSUADE_FULL_BLINKS: int = 2
+const PERSUADE_FULL_BLINK_SEC: float = 0.1
 
 var _state: BattleState
 var _cursor: int = 0
 var _busy: bool = false
 var _scripted: bool = false
 var _ended_at_msec: int = 0
+var _result_shown: bool = false
+var _result: BattleState.Result = BattleState.Result.DEFEATED
+var _sound: SoundPlayer
 
 var _menu_rows: Array[PanelContainer] = []
 var _menu_cursors: Array[Label] = []
 var _menu_names: Array[Label] = []
+var _result_box: Control
 var _result_label: Label
 var _result_hint: Label
 var _turn_label: Label
 var _battery_label: Label
-var _battery_bar: ProgressBar
+var _battery_bar: SteppedGauge
 var _hp_label: Label
-var _hp_bar: ProgressBar
+var _hp_bar: SteppedGauge
 var _persuade_label: Label
-var _persuade_bar: ProgressBar
+var _persuade_bar: SteppedGauge
 var _log: RichTextLabel
+var _charles_sprite: Control
+var _enemy_sprite: Control
+## Floating damage numbers draw here, above everything else.
+var _fx_layer: Control
 
 
 func _ready() -> void:
@@ -83,9 +103,13 @@ func _ready() -> void:
 	_state = BattleState.new(enemy, battery_max, battery_start)
 	_state.line_logged.connect(_on_line_logged)
 	_state.battle_ended.connect(_on_battle_ended)
+	_sound = SoundPlayer.new()
+	_sound.bank = sound_bank
+	_sound.music = music
+	add_child(_sound)
 	theme = UiStyle.make_theme(palette)
 	_build_ui()
-	_refresh()
+	_refresh(false)
 	_on_line_logged(enemy.intro_line)
 	var script_ids: PackedStringArray = _parse_script_ids()
 	if not script_ids.is_empty():
@@ -118,16 +142,93 @@ func _unhandled_input(event: InputEvent) -> void:
 		_choose(_cursor)
 
 
-## The single path every command takes, from the keyboard or from `--commands=`.
+## The single path every command takes, from the keyboard, a tap or `--commands=`.
+## The rules resolve at once; the screen then plays the turn out in steps.
 func _choose(index: int) -> void:
 	_busy = true
-	_state.player_act(commands[index])
-	_refresh()
+	_sound.play(&"confirm")
+	var command: BattleCommand = commands[index]
+	var before: Dictionary = _snapshot()
+	_state.player_act(command)
+	await _play_player_action(command, before)
 	if not _state.is_ended():
 		await get_tree().create_timer(enemy_turn_delay_sec).timeout
+		before = _snapshot()
 		_state.enemy_act()
-		_refresh()
+		await _play_enemy_action(before)
+	if _state.is_ended():
+		await _show_result()
 	_busy = false
+
+
+func _snapshot() -> Dictionary:
+	return {hp = _state.enemy_hp, persuade = _state.persuade_gauge, battery = _state.battery}
+
+
+func _play_player_action(command: BattleCommand, before: Dictionary) -> void:
+	match command.kind:
+		BattleCommand.Kind.ATTACK:
+			_sound.play(&"swing")
+			await BattleFx.lunge_out(_charles_sprite, 1)
+			_sound.play(&"hit")
+			_pop(_enemy_sprite, "-%d" % (before.hp - _state.enemy_hp), palette.gauge_enemy_hp)
+			_refresh()
+			await BattleFx.hit(_enemy_sprite)
+			await BattleFx.lunge_back(_charles_sprite, 1)
+		BattleCommand.Kind.PERSUADE:
+			_sound.play(&"persuade")
+			await BattleFx.hop(_charles_sprite)
+			_pop(_enemy_sprite, "설득 +%d" % (_state.persuade_gauge - before.persuade), palette.gauge_persuade)
+			_refresh()
+			await BattleFx.hop(_enemy_sprite)
+		BattleCommand.Kind.DEFEND:
+			_sound.play(&"guard")
+			_pop(_charles_sprite, "방어 %d%%" % _state.guard_percent, palette.gauge_battery)
+			_refresh()
+			await BattleFx.bow(_charles_sprite)
+
+
+func _play_enemy_action(before: Dictionary) -> void:
+	_sound.play(&"enemy_attack")
+	await BattleFx.lunge_out(_enemy_sprite, -1)
+	_sound.play(&"hurt")
+	_pop(_charles_sprite, "-%d%%" % (before.battery - _state.battery), palette.gauge_battery)
+	_refresh()
+	await BattleFx.hit(_charles_sprite)
+	await BattleFx.lunge_back(_enemy_sprite, -1)
+
+
+## Plays the ending for `_result`, shows the banner, then tells the host.
+func _show_result() -> void:
+	for row in _menu_rows:
+		row.hide()
+	_sound.stop_music()
+	match _result:
+		BattleState.Result.PERSUADED:
+			await _persuade_bar.flash(PERSUADE_FULL_BLINKS, PERSUADE_FULL_BLINK_SEC)
+			_sound.play(&"victory")
+		BattleState.Result.DEFEATED:
+			_sound.play(&"enemy_down")
+			await BattleFx.blink_out(_enemy_sprite)
+			_sound.play(&"victory")
+		BattleState.Result.DEPLETED:
+			_sound.play(&"power_down")
+			await BattleFx.power_down(_charles_sprite)
+	_result_label.text = RESULT_TITLES[_result]
+	_result_label.add_theme_color_override(&"font_color", palette.danger if _result == BattleState.Result.DEPLETED else palette.reward)
+	_result_box.show()
+	_result_label.hide()
+	# Let the menu column re-lay out without the rows before the banner drops.
+	await get_tree().process_frame
+	await BattleFx.drop_in(_result_label)
+	_result_hint.show()
+	_result_shown = true
+	_ended_at_msec = Time.get_ticks_msec()
+	battle_ended.emit(_result)
+
+
+func _pop(anchor: Control, text: String, color: Color) -> void:
+	BattleFx.pop_number(_fx_layer, anchor, text, color, UiStyle.crisp(palette.font_bold), palette.size_emphasis, palette.border_ink)
 
 
 func _run_script(ids: PackedStringArray) -> void:
@@ -156,13 +257,15 @@ func _parse_script_ids() -> PackedStringArray:
 
 func _move_cursor(step: int) -> void:
 	_cursor = posmod(_cursor + step, commands.size())
+	_sound.play(&"cursor")
 	_refresh_menu()
 
 
 func _point_at(index: int) -> void:
-	if _busy or _scripted or _state.is_ended():
+	if _busy or _scripted or _state.is_ended() or index == _cursor:
 		return
 	_cursor = index
+	_sound.play(&"cursor")
 	_refresh_menu()
 
 
@@ -174,7 +277,7 @@ func _on_row_input(event: InputEvent, index: int) -> void:
 
 
 func _can_restart() -> bool:
-	return _state.is_ended() and not _scripted \
+	return _result_shown and not _scripted \
 			and Time.get_ticks_msec() - _ended_at_msec >= int(result_input_delay_sec * 1000.0)
 
 
@@ -187,27 +290,24 @@ func _on_line_logged(text: String) -> void:
 	_log.add_text(text + "\n")
 
 
+## The rules ended the fight; the screen shows it once the turn has played out
+## (_show_result), and only then emits `battle_ended`.
 func _on_battle_ended(result: BattleState.Result) -> void:
-	for row in _menu_rows:
-		row.hide()
-	_result_label.text = RESULT_TITLES[result]
-	_result_label.add_theme_color_override(&"font_color", palette.danger if result == BattleState.Result.DEPLETED else palette.reward)
-	_result_label.show()
-	_result_hint.show()
-	_ended_at_msec = Time.get_ticks_msec()
-	battle_ended.emit(result)
+	_result = result
 
 
-func _refresh() -> void:
+## Copies the rules' numbers onto the HUD. `animate` false skips the gauge afterimage.
+func _refresh(animate: bool = true) -> void:
 	_turn_label.text = "턴 %d" % _state.turn_number
 	_battery_label.text = "배터리 %d%%" % _state.battery
 	if _state.guard_percent > 0:
 		_battery_label.text += "   방어 %d%%" % _state.guard_percent
-	_battery_bar.value = _state.battery
+	_battery_bar.set_value(_state.battery, animate)
+	_battery_bar.set_warning(_state.battery > 0 and _state.battery * 100 <= low_battery_percent * battery_max, LOW_BATTERY_BLINK_SEC)
 	_hp_label.text = "HP %d / %d" % [_state.enemy_hp, enemy.max_hp]
-	_hp_bar.value = _state.enemy_hp
+	_hp_bar.set_value(_state.enemy_hp, animate)
 	_persuade_label.text = "설득 %d / %d" % [_state.persuade_gauge, enemy.persuade_max]
-	_persuade_bar.value = _state.persuade_gauge
+	_persuade_bar.set_value(_state.persuade_gauge, animate)
 	_refresh_menu()
 
 
@@ -259,16 +359,16 @@ func _build_ui() -> void:
 	charles_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_turn_label = _add_label(charles_head, "", palette.font_regular, palette.text_secondary)
 	_battery_label = _add_label(charles_box, "", palette.font_regular)
-	_battery_bar = UiStyle.make_gauge(palette, battery_max, palette.gauge_battery)
+	_battery_bar = SteppedGauge.create(palette, battery_max, palette.gauge_battery)
 	charles_box.add_child(_battery_bar)
 
 	var enemy_box := _add_panel(hud)
 	_add_label(enemy_box, enemy.display_name, palette.font_bold)
 	_hp_label = _add_label(enemy_box, "", palette.font_regular)
-	_hp_bar = UiStyle.make_gauge(palette, enemy.max_hp, palette.gauge_enemy_hp)
+	_hp_bar = SteppedGauge.create(palette, enemy.max_hp, palette.gauge_enemy_hp)
 	enemy_box.add_child(_hp_bar)
 	_persuade_label = _add_label(enemy_box, "", palette.font_regular)
-	_persuade_bar = UiStyle.make_gauge(palette, enemy.persuade_max, palette.gauge_persuade)
+	_persuade_bar = SteppedGauge.create(palette, enemy.persuade_max, palette.gauge_persuade)
 	enemy_box.add_child(_persuade_bar)
 
 	# Stage: the two sprites stand on the kitchen floor.
@@ -279,11 +379,11 @@ func _build_ui() -> void:
 	var inset_left := Control.new()
 	inset_left.custom_minimum_size = Vector2(STAGE_INSET, 0)
 	stage.add_child(inset_left)
-	_add_actor(stage, "찰스", Color(0.55, 0.60, 0.65), charles_portrait)
+	_charles_sprite = _add_actor(stage, "찰스", Color(0.55, 0.60, 0.65), charles_portrait)
 	var stage_gap := Control.new()
 	stage_gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	stage.add_child(stage_gap)
-	_add_actor(stage, enemy.display_name, Color(0.65, 0.55, 0.55), enemy.portrait)
+	_enemy_sprite = _add_actor(stage, enemy.display_name, Color(0.65, 0.55, 0.55), enemy.portrait)
 	var inset_right := Control.new()
 	inset_right.custom_minimum_size = Vector2(STAGE_INSET, 0)
 	stage.add_child(inset_right)
@@ -315,9 +415,14 @@ func _build_ui() -> void:
 		_menu_rows.append(row)
 		_menu_cursors.append(cursor)
 		_menu_names.append(command_name)
-	_result_label = _add_label(menu_box, "", palette.font_bold)
+	# The banner sits in a plain Control so it can drop in by offset; a
+	# container would snap it back into place.
+	_result_box = Control.new()
+	_result_box.custom_minimum_size = Vector2(0, palette.size_banner + 16)
+	_result_box.hide()
+	menu_box.add_child(_result_box)
+	_result_label = _add_label(_result_box, "", palette.font_bold)
 	_result_label.add_theme_font_size_override(&"font_size", palette.size_banner)
-	_result_label.hide()
 	var hint: String = "탭 또는 Enter: 다시 하기" if OS.has_feature("web") else "클릭 또는 Enter: 다시 하기    Esc: 종료"
 	_result_hint = _add_label(menu_box, hint, palette.font_regular, palette.text_secondary)
 	_result_hint.hide()
@@ -329,6 +434,11 @@ func _build_ui() -> void:
 	# Keep focus off the log so ui_up/ui_down always reach _unhandled_input.
 	_log.focus_mode = Control.FOCUS_NONE
 	log_box.add_child(_log)
+
+	_fx_layer = Control.new()
+	_fx_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_fx_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_fx_layer)
 
 
 ## A panel that expands sideways; returns the column inside it.
@@ -343,27 +453,36 @@ func _add_panel(parent: Control) -> VBoxContainer:
 
 
 ## Shows `portrait` at twice its pixels, standing on the stage floor, or a
-## named gray box when there is no portrait yet.
-func _add_actor(parent: Control, actor_name: String, color: Color, portrait: Texture2D) -> void:
+## named gray box when there is no portrait yet. Returns the sprite, which
+## sits inside a plain holder so BattleFx can move it without the stage
+## container snapping it back.
+func _add_actor(parent: Control, actor_name: String, color: Color, portrait: Texture2D) -> Control:
+	var size: Vector2 = portrait.get_size() * SPRITE_SCALE if portrait != null else Vector2(200, 200)
+	var holder := Control.new()
+	holder.custom_minimum_size = size
+	holder.size_flags_vertical = Control.SIZE_SHRINK_END
+	holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(holder)
 	if portrait == null:
 		var box := ColorRect.new()
 		box.color = color
-		box.custom_minimum_size = Vector2(200, 200)
-		box.size_flags_vertical = Control.SIZE_SHRINK_END
-		parent.add_child(box)
+		box.size = size
+		holder.add_child(box)
 		var name_label := _add_label(box, actor_name, palette.font_regular)
 		name_label.set_anchors_preset(Control.PRESET_FULL_RECT)
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		return
+		return box
 	var sprite := TextureRect.new()
 	sprite.texture = portrait
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
-	sprite.custom_minimum_size = portrait.get_size() * SPRITE_SCALE
-	sprite.size_flags_vertical = Control.SIZE_SHRINK_END
-	parent.add_child(sprite)
+	sprite.size = size
+	sprite.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	BattleFx.prepare(sprite)
+	holder.add_child(sprite)
+	return sprite
 
 
 func _add_label(parent: Control, text: String, font: Font, color: Color = palette.text_body) -> Label:

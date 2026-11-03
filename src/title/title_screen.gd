@@ -20,6 +20,10 @@ const LOGO_DELAY_SEC: float = 0.6
 @export_file("*.tscn") var new_game_scene: String = ""
 @export var tagline: String = "버림받은 집사 로봇의 구직 RPG"
 @export var footer: String = "v0.1 프로토타입"
+## Audio event id -> sound ("cursor", "confirm"). Empty plays no effects.
+@export var sound_bank: SoundBank
+## Looping title music. Empty plays none.
+@export var music: AudioStream
 
 var _items: PackedStringArray = ["새 게임", "종료"]
 var _cursor: int = 0
@@ -27,12 +31,17 @@ var _rows: Array[PanelContainer] = []
 var _cursor_labels: Array[Label] = []
 var _item_labels: Array[Label] = []
 var _blink_on: bool = true
+var _sound: SoundPlayer
 
 
 func _ready() -> void:
 	assert(palette != null, "title screen needs a UiPalette")
 	if OS.has_feature("web"):
 		_items.remove_at(_items.find("종료"))
+	_sound = SoundPlayer.new()
+	_sound.bank = sound_bank
+	_sound.music = music
+	add_child(_sound)
 	theme = UiStyle.make_theme(palette)
 	_build_ui()
 	_refresh()
@@ -54,6 +63,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _move(step: int) -> void:
 	_cursor = posmod(_cursor + step, _items.size())
+	_sound.play(&"cursor")
 	# Moving keeps the cursor lit (art bible 7.9).
 	_blink_on = true
 	_refresh()
@@ -72,6 +82,7 @@ func _on_row_input(event: InputEvent, index: int) -> void:
 
 
 func _choose() -> void:
+	_sound.play(&"confirm")
 	match _items[_cursor]:
 		"새 게임":
 			get_tree().change_scene_to_file(new_game_scene)
