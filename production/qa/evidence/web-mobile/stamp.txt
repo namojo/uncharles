@@ -1,0 +1,3 @@
+Reviewed-Content-Hash: src/title/title_screen.gd 11a9c39809c54e14f981a7c0cad19fabbd84ac6d
+Reviewed-Content-Hash: src/battle/battle_ui.gd bbc606edd3541657a517c6e353dbabfb74dddb53
+Reviewed-Content-Hash: export_presets.cfg 927b9b931fdd6e09b180b2b28146177f40922cad

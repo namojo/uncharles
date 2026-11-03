@@ -49,7 +49,7 @@ naming:
 
 # godot is on PATH via the winget alias (Godot 4.7.2, installed 2026-11-03).
 commands:
-  build: "[TO BE CONFIGURED]"   # no export preset exists yet — set after creating one in the editor
+  build: "godot --headless --path . --export-release Web build/web/index.html"   # export_presets.cfg "Web"; CI deploys it to GitHub Pages (.github/workflows/deploy-web.yml)
   test: "godot --headless -s -d --remote-debug tcp://127.0.0.1:0 res://addons/gdUnit4/bin/GdUnitCmdTool.gd -a res://tests --ignoreHeadlessMode"
   run: "godot --path . --windowed --resolution 1280x720"
   smoke: "godot --headless --quit-after 5"
