@@ -1,0 +1,6 @@
+Reviewed-Content-Hash: src/title/title_screen.gd 10aaa2b4d220c7c912bcf11d1570cdeff8960620
+Reviewed-Content-Hash: src/title/title_screen.tscn 45d02c7515a13e48b278c92467dccda558a29904
+Reviewed-Content-Hash: src/ui/ui_style.gd 1574973978f992fe67d8dec58e75d327f723300d
+Reviewed-Content-Hash: src/ui/ui_palette.gd 6d2e31a14069b826414307a3108dee76baee220d
+Reviewed-Content-Hash: assets/data/ui/ui_palette.tres b616511471eb87cbc01170bc260538691b2e5c73
+Reviewed-Content-Hash: project.godot 5c0eaba2ed499a641d89016224f2905ff86cc69c

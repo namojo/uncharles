@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/title/title_screen.gd" id="1_title"]
+[ext_resource type="Resource" path="res://assets/data/ui/ui_palette.tres" id="2_palette"]
+[ext_resource type="Texture2D" path="res://assets/art/backgrounds/agency_night.png" id="3_bg"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/logo_uncharles.png" id="4_logo"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_title")
+palette = ExtResource("2_palette")
+background = ExtResource("3_bg")
+logo = ExtResource("4_logo")
+new_game_scene = "res://src/battle/battle_scene.tscn"

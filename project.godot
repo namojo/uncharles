@@ -1,13 +1,19 @@
 ; Engine configuration file.
-; run/main_scene is left unset on purpose: /dev-story or the developer sets it
-; once the first scene exists.
 
 config_version=5
 
 [application]
 
 config/name="Uncharles"
+run/main_scene="res://src/title/title_screen.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
 
 [editor_plugins]
 
@@ -16,3 +22,4 @@ enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
 [rendering]
 
 renderer/rendering_method="forward_plus"
+textures/canvas_textures/default_texture_filter=0
