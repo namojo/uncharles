@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko" data-fonts="Pretendard">
+<head>
+<meta charset="utf-8">
+<title>Uncharles making-of</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts/fonts_game.css">
+<style>
+  :root {
+    --bg: #0c0b12; --ink: #e8e6f0; --dim: #9a9cb0; --accent: #3fe0e8; --accent2: #f2c94c;
+    --display: "Black Han Sans", "Pretendard", sans-serif;
+    --serif: "Noto Serif KR", "Pretendard", serif;
+    --num: "Anton", "Pretendard", sans-serif;
+    --mono: "JetBrains Mono", "Galmuri11", "Pretendard", monospace;
+    --px: "Galmuri11", "Pretendard", monospace;
+  }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  #wrap { transform-origin: 0 0; }
+  #stage { position: relative; overflow: hidden; background: var(--bg); color: var(--ink);
+           font-family: "Pretendard", sans-serif; font-kerning: normal; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+  .cam, .top, .scene { position: absolute; inset: 0; }
+  .scene { overflow: hidden; }
+  .a { position: absolute; }
+  .full { position: absolute; inset: 0; }
+  .center { position: absolute; left: 0; right: 0; text-align: center; }
+  .display { font-family: var(--display); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; }
+  .px { font-family: var(--px); }
+  .player { position: fixed; left: 0; right: 0; bottom: 0; height: 44px; display: flex; gap: 12px; align-items: center;
+            padding: 0 12px; background: #111; color: #bbb; font: 12px/1 Menlo, monospace; }
+  .player .scrub { flex: 1; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage"></div></div>
+<script src="timeline.js"></script>
+<script src="data.js"></script>
+<script src="engine.js"></script>
+<script src="fx.js"></script>
+<script src="scenes_common.js"></script>
+<script src="scenes_s01.js"></script>
+<script src="scenes_s02_s03.js"></script>
+<script src="scenes_s04_s06.js"></script>
+<script src="scenes_s07_s09.js"></script>
+</body>
+</html>

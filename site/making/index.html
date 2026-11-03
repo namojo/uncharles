@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uncharles 제작기</title>
+<meta name="description" content="Claude Code Game Studios로 Uncharles를 만든 과정을 76초에 담은 쇼릴. 사람이 정하고, 에이전트가 쓰고, 증거가 닫는다.">
+<meta property="og:title" content="Uncharles 제작기">
+<meta property="og:description" content="사람 1명과 에이전트 49명이 버림받은 집사 로봇 게임을 만든 과정, 76초.">
+<meta property="og:type" content="video.other">
+<meta property="og:image" content="https://namojo.github.io/uncharles/making/poster.jpg">
+<link rel="icon" href="logo.png">
+<style>
+  @font-face { font-family: "Galmuri11"; src: url("fonts/Galmuri11.woff") format("woff"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Galmuri11"; src: url("fonts/Galmuri11-Bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+  :root {
+    color-scheme: dark;
+    --bg: #0c0b12; --panel: #1b1a24; --band: #2e2c40; --steel: #8a90a6; --text: #e8e6f0; --dim: #9a9cb0;
+    --cyan: #3fe0e8; --amber: #f2c94c; --red: #ff4d6d;
+    --px: "Galmuri11", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  }
+  :root[data-theme="light"] { color-scheme: light; --bg: #efe6d2; --panel: #fbf7ea; --band: #d8ceb6; --steel: #6b6355; --text: #1b1a24; --dim: #5b5648; --cyan: #0a97a3; --amber: #9a6b00; --red: #c2304f; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--px); line-height: 1.6; word-break: keep-all; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 20px; }
+  header img { height: 44px; width: auto; image-rendering: pixelated; }
+  a { color: var(--cyan); }
+  .tag { display: inline-block; background: var(--amber); color: #0c0b12; font-weight: 700; padding: 2px 10px; font-size: 14px; }
+  h1 { font-size: clamp(26px, 5.4vw, 44px); line-height: 1.25; margin: 12px 0 12px; font-weight: 700; }
+  .lead { color: var(--dim); font-size: clamp(16px, 2.4vw, 19px); max-width: 46em; margin: 0 0 24px; }
+  .player { position: relative; background: #000; border: 4px solid var(--steel); box-shadow: 8px 8px 0 #0b0a10; }
+  video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+  h2 { font-size: clamp(20px, 3.4vw, 26px); margin: 40px 0 14px; font-weight: 700; }
+  .chapters { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .chapters button { width: 100%; min-height: 56px; text-align: left; font: inherit; color: var(--text); background: var(--panel); border: 3px solid var(--band); padding: 8px 12px; cursor: pointer; display: flex; gap: 12px; align-items: baseline; }
+  .chapters button:focus-visible { border-color: var(--cyan); outline: none; }
+  @media (hover: hover) { .chapters button:hover { border-color: var(--cyan); } }
+  .chapters button[aria-current="true"] { border-color: var(--cyan); background: var(--band); }
+  .chapters time { color: var(--cyan); font-weight: 700; flex: none; }
+  .chapters b { display: block; font-weight: 700; }
+  .chapters span { color: var(--dim); font-size: 14px; display: block; }
+  .rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .rules div { background: var(--panel); border: 3px solid var(--band); padding: 16px; }
+  .rules strong { display: block; font-size: 20px; margin-bottom: 6px; }
+  .rules div:nth-child(1) strong { color: var(--text); }
+  .rules div:nth-child(2) strong { color: var(--cyan); }
+  .rules div:nth-child(3) strong { color: var(--amber); }
+  .rules p { margin: 0; color: var(--dim); font-size: 15px; }
+  .credits { color: var(--dim); font-size: 14px; }
+  .credits li { margin: 6px 0; }
+  .play { display: inline-block; margin-top: 8px; background: var(--cyan); color: #0c0b12; font-weight: 700; text-decoration: none; padding: 12px 20px; border: 3px solid #0c0b12; box-shadow: 5px 5px 0 #0b0a10; }
+  .play:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  button.theme { font: inherit; font-size: 14px; color: var(--text); background: var(--panel); border: 3px solid var(--band); padding: 8px 12px; min-height: 44px; cursor: pointer; }
+  @media (max-width: 720px) {
+    .chapters { grid-template-columns: 1fr; }
+    .rules { grid-template-columns: 1fr; }
+    header img { height: 34px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="logo.png" alt="UNCHARLES">
+    <button class="theme" id="theme" type="button" aria-pressed="false">밝은 화면</button>
+  </header>
+
+  <span class="tag">MAKING OF</span>
+  <h1>버림받은 집사 로봇 게임을,<br>사람 한 명과 에이전트 49명이 만든 과정</h1>
+  <p class="lead">Claude Code Game Studios로 Uncharles를 만들며 거친 단계를 76초에 담았습니다. 이 프로젝트의 목표는 구현 가능성을 확인하는 것이고, 지금은 프롤로그와 의뢰 1까지 직접 플레이할 수 있습니다.</p>
+
+  <div class="player">
+    <video id="v" controls playsinline preload="metadata" poster="poster.jpg">
+      <source src="uncharles-making.mp4" type="video/mp4">
+      이 브라우저는 동영상을 재생할 수 없습니다. <a href="uncharles-making.mp4">영상 파일 받기</a>
+    </video>
+  </div>
+
+  <h2>장면으로 건너뛰기</h2>
+  <ol class="chapters" id="chapters">
+    <li><button type="button" data-t="0"><time>0:00</time><div><b>해지</b><span>구독 해지 문자 한 통에서 시작한다</span></div></button></li>
+    <li><button type="button" data-t="8"><time>0:08</time><div><b>브리프</b><span>질문, 선택지, 결정, 초안, 승인. 사람이 정하는 자리</span></div></button></li>
+    <li><button type="button" data-t="16"><time>0:16</time><div><b>뼈대</b><span>스토리 6장과 테스트, 그리고 수십 번의 거부</span></div></button></li>
+    <li><button type="button" data-t="24"><time>0:24</time><div><b>아트</b><span>회색 상자에서 도트 아트로</span></div></button></li>
+    <li><button type="button" data-t="32"><time>0:32</time><div><b>한글 도트</b><span>11×11칸 폰트로 만든 화면</span></div></button></li>
+    <li><button type="button" data-t="40"><time>0:40</time><div><b>웹·폰</b><span>GitHub Pages와 휴대폰 터치</span></div></button></li>
+    <li><button type="button" data-t="48"><time>0:48</time><div><b>모션·사운드</b><span>"모션도 사운드도 없네요"라는 한마디</span></div></button></li>
+    <li><button type="button" data-t="56"><time>0:56</time><div><b>이야기</b><span>"맥락이 있어야 하지 않나"에서 나온 프롤로그</span></div></button></li>
+    <li><button type="button" data-t="64"><time>1:04</time><div><b>수렴</b><span>사람이 정하고, 에이전트가 쓰고, 증거가 닫는다</span></div></button></li>
+  </ol>
+
+  <h2>세 가지 규칙</h2>
+  <div class="rules">
+    <div><strong>사람이 정한다</strong><p>컨셉, 범위, 톤, 승인. 전투가 밋밋하다거나 시작이 갑작스럽다는 한마디가 다음 방향을 바꿨다.</p></div>
+    <div><strong>에이전트가 쓴다</strong><p>art-director, gameplay-programmer, writer 같은 전문 에이전트가 초안을 쓰고, 사람은 고르고 고친다.</p></div>
+    <div><strong>증거가 닫는다</strong><p>"문법 검사 통과는 실행이 아니다." 스크린샷과 종료 코드가 남아야 한 단계가 끝난다.</p></div>
+  </div>
+
+  <h2>직접 해 보기</h2>
+  <a class="play" href="../">Uncharles 플레이 (프롤로그 + 의뢰 1)</a>
+
+  <h2>크레딧</h2>
+  <ul class="credits">
+    <li>프레임워크: Claude Code Game Studios (Claude Code 서브에이전트 스튜디오)</li>
+    <li>영감: Adrian Tchaikovsky, <i>Service Model</i> (이름과 정서만 가져왔고 줄거리와 인물은 쓰지 않았다)</li>
+    <li>글꼴: Galmuri11 (SIL Open Font License 1.1, <a href="fonts/OFL.txt">라이선스</a>)</li>
+    <li>음악과 효과음: 게임 안의 코드로 합성한 칩튠. 외부 음원은 없다.</li>
+  </ul>
+</div>
+<script>
+(function () {
+  var v = document.getElementById("v");
+  var buttons = Array.prototype.slice.call(document.querySelectorAll("#chapters button"));
+  var starts = buttons.map(function (b) { return Number(b.getAttribute("data-t")); });
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      v.currentTime = Number(b.getAttribute("data-t"));
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+      v.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  });
+  function mark() {
+    var cur = 0;
+    for (var i = 0; i < starts.length; i++) if (v.currentTime >= starts[i] - 0.05) cur = i;
+    buttons.forEach(function (b, i) { if (i === cur) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
+  }
+  v.addEventListener("timeupdate", mark);
+  var theme = document.getElementById("theme");
+  var root = document.documentElement;
+  try { if (localStorage.getItem("making-theme") === "light") { root.setAttribute("data-theme", "light"); theme.setAttribute("aria-pressed", "true"); theme.textContent = "어두운 화면"; } } catch (e) {}
+  theme.addEventListener("click", function () {
+    var light = root.getAttribute("data-theme") !== "light";
+    if (light) root.setAttribute("data-theme", "light"); else root.removeAttribute("data-theme");
+    theme.setAttribute("aria-pressed", String(light));
+    theme.textContent = light ? "어두운 화면" : "밝은 화면";
+    try { localStorage.setItem("making-theme", light ? "light" : "dark"); } catch (e) {}
+  });
+  mark();
+})();
+</script>
+</body>
+</html>

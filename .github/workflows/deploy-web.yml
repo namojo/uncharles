@@ -63,6 +63,12 @@ jobs:
           "$godot" --headless --path . --export-release "Web" build/web/index.html
           test -s build/web/index.wasm && test -s build/web/index.pck
 
+      # The making-of page (static, built by tools/making/) is served at /making/.
+      - name: Add making-of page
+        run: |
+          cp -r site/making build/web/making
+          test -s build/web/making/index.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
