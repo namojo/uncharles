@@ -137,7 +137,8 @@ func _start_dialogue(entry: String) -> void:
 
 func _on_node_shown(node: Dictionary, text: String) -> void:
 	_trace("node %s" % node.id)
-	_show_backdrop([node.backdrop, node.scene])
+	# A node's `cut` (a close-up for this line) wins over its scene's backdrop.
+	_show_backdrop([node.get("cut", ""), node.backdrop, node.scene])
 	_box.show_line(node.speaker, text)
 
 

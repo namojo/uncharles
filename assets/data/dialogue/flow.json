@@ -83,14 +83,31 @@
   }
  },
  "backdrops": {
+  "cut_prologue_text": "res://assets/art/cuts/prologue_text.png",
+  "cut_prologue_sticker": "res://assets/art/cuts/prologue_sticker.png",
+  "cut_prologue_umbrella": "res://assets/art/cuts/prologue_umbrella.png",
+  "cut_agency_oh": "res://assets/art/cuts/agency_oh.png",
+  "cut_agency_nametag": "res://assets/art/cuts/agency_nametag.png",
+  "cut_agency_form_zero": "res://assets/art/cuts/agency_form_zero.png",
+  "cut_job1_notice": "res://assets/art/cuts/job1_notice.png",
+  "cut_job1_door_open": "res://assets/art/cuts/job1_door_open.png",
+  "cut_job1_narae_talk": "res://assets/art/cuts/job1_narae_talk.png",
+  "cut_job1_kitchen_door": "res://assets/art/cuts/job1_kitchen_door.png",
+  "cut_job1_cake": "res://assets/art/cuts/job1_cake.png",
+  "cut_job1_defeated": "res://assets/art/cuts/job1_defeated.png",
+  "cut_job1_choice": "res://assets/art/cuts/job1_choice.png",
+  "cut_agency_coffee": "res://assets/art/cuts/agency_coffee.png",
+  "cut_agency_unfrosty": "res://assets/art/cuts/agency_unfrosty.png",
   "backdrop_door_rain": "res://assets/art/backgrounds/prologue_door.png",
-  "backdrop_door_after": "res://assets/art/backgrounds/prologue_door.png",
+  "backdrop_door_after": "res://assets/art/backgrounds/prologue_door_after.png",
   "backdrop_road_to_agency": "res://assets/art/backgrounds/prologue_road.png",
   "prologue_*": "res://assets/art/backgrounds/prologue_door.png",
   "agency_*": "res://assets/art/backgrounds/agency_interior.png",
   "job1_entrance": "res://assets/art/backgrounds/apt_entrance.png",
   "job1_living*": "res://assets/art/backgrounds/apt_living.png",
   "job1_fact*": "res://assets/art/backgrounds/apt_living.png",
-  "job1_*": "res://assets/art/backgrounds/kitchen.png"
+  "job1_farewell": "res://assets/art/backgrounds/apt_entrance.png",
+  "job1_*": "res://assets/art/backgrounds/kitchen.png",
+  "junkyard_*": "res://assets/art/backgrounds/junkyard.png"
  }
 }

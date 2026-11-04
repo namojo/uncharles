@@ -192,6 +192,8 @@ def validate(files: dict[str, list[dict]], values: dict, flow: dict, problems: l
                 check_text(node.get("text"), where, names, problems)
                 if "affinity" in node:
                     node["affinity"] = check_affinity(node["affinity"], where, names, problems)
+                if "cut" in node and node["cut"] not in flow.get("backdrops", {}):
+                    problems.append(f"{where}: cut '{node['cut']}' is not a flow.json backdrops id")
                 if "action" in node and node["action"] not in flow.get("actions", []):
                     problems.append(f"{where}: unknown action '{node['action']}'")
                 if kind == "next":

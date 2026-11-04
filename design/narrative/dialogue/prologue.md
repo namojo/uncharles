@@ -45,23 +45,28 @@ nodes:
     text: '어느 화요일 밤. 윤씨 집 현관 앞. 비가 온다. 연미복 로봇이 쟁반을 들고 서 있다.'
     next: prologue_02
   - id: prologue_02
+    cut: cut_prologue_text
     speaker: 환경
     text: '[알림] 고객님의 집사 구독이 해지되었습니다. 기기는 문 앞에 내놓아 주세요.'   # 캐논(문자 원문)
     next: prologue_03
   - id: prologue_03
+    cut: cut_prologue_text
     speaker: 찰스
     text: '이 문자의 수신자는 저입니다. 오발송인지 확인합니다.'
     next: prologue_04
   - id: prologue_04
+    cut: cut_prologue_text
     speaker: 환경
     text: '해지 사유: 그냥요.'   # 캐논
     next: prologue_05
   - id: prologue_05
+    cut: cut_prologue_text
     speaker: 찰스
     text: '오발송이 아닙니다. "그냥요"는 접수 가능한 사유입니다.'
     next: prologue_06
   # --- 유일한 선택지: 순수 맛, 호감도·플래그 없음 ---
   - id: prologue_06
+    cut: cut_prologue_text
     speaker: 찰스
     text: '회신 문구를 입력합니다.'
     choices:
@@ -70,6 +75,7 @@ nodes:
       - text: '"냉장고에 내일 아침 식사가 있습니다."'
         next: prologue_07
   - id: prologue_07
+    cut: cut_prologue_text
     speaker: 환경
     text: '발신 전용 번호입니다. 회신하실 수 없습니다.'
     next: prologue_08
@@ -82,14 +88,17 @@ nodes:
     text: '스티커를 구매했습니다. 3,000원. 제 돈으로 결제했습니다. 영수증은 보관합니다.'
     next: prologue_10
   - id: prologue_10
+    cut: cut_prologue_sticker
     speaker: 내레이션
     text: '찰스는 스티커를 등에 붙였다. 손이 닿지 않아 벽에 등을 대고 붙였다.'
     next: prologue_11
   - id: prologue_11
+    cut: cut_prologue_sticker
     speaker: 찰스
     text: '고객님을 번거롭게 해서는 안 됩니다. 이것이 마지막 업무입니다. 대기합니다.'
     next: prologue_12
   - id: prologue_12
+    cut: cut_prologue_umbrella
     speaker: 환경
     text: '현관 옆 우산꽂이에 작은 노란 우산이 하나 꽂혀 있다. 아이 것이다.'
     next: prologue_13

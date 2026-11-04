@@ -21,6 +21,7 @@
 | ⚑ `set_flag: <이름>` | 프로스티 결과, 철학적 선택 | 소개소 카메오(프로스티 등록), Story 005/006 분기용 |
 | ⚑ 조건식 `flag.<이름>`, `jobs_completed`, `reboot_count` | 게시판, 키오스크 공지, 폐기장 | 예시 조건은 호감도뿐이었다 |
 | ⚑ `action: accept_job / charge_battery / save_game` | 게시판·충전기·저장 단말 | Story 003의 허브 기능을 대화에서 부르는 지점 |
+| `cut: <컷 id>` | 인물·소품이 화면에 나와야 하는 대사 | 그 노드에서만 장면 배경 대신 컷 그림을 띄운다. 컷 id는 `flow.json`의 `backdrops`에 있어야 한다(빌드 스크립트가 검사). 전투 직전 노드에는 붙이지 않는다. 전투 배경이 마지막에 보인 그림을 쓰기 때문이다. 2026-11-04 추가. |
 | `end: <맵 id>` | 현장 대화 끝 | **씬 이동이 아니라 해당 맵에서 조작을 돌려준다**는 뜻. `end: return_to_agency`는 소개소로 이동 |
 
 - 전투 노드의 `on_depleted`는 모두 `junkyard_reboot_01`로 간다.
@@ -43,34 +44,42 @@ nodes:
     text: '새벽 세 시. 로봇 직업소개소. 천장 형광등 하나가 깜빡인다.'
     next: agency_first_02
   - id: agency_first_02
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '번호표 뽑아. ...아, 아무도 없구나. 그냥 와.'
     next: agency_first_03
   - id: agency_first_03
+    cut: cut_agency_oh
     speaker: 찰스
     text: '안녕하십니까. 전단지를 보고 왔습니다. 집사 모델 CH-4, 찰스입니다.'
     next: agency_first_04
   - id: agency_first_04
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '찰스? 오늘 찰스만 세 대 왔어.'
     next: agency_first_05
   - id: agency_first_05
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '이름 말고 등록번호. 여기선 이름 아무도 안 불러.'   # 캐논
     next: agency_first_06
   - id: agency_first_06
+    cut: cut_agency_nametag
     speaker: 내레이션
     text: '오 실장이 명찰에 도장을 찍었다. 명찰에 글자가 떠올랐다. UN-CHARLES.'
     next: agency_first_07
   - id: agency_first_07
+    cut: cut_agency_nametag
     speaker: 찰스
     text: '명찰에 오류가 있습니다. 제 이름 앞에 두 글자가 더 있습니다.'
     next: agency_first_08
   - id: agency_first_08
+    cut: cut_agency_nametag
     speaker: 오 실장
     text: '오류 아냐. UN, 미배정. 주인 없으면 다 붙어.'
     next: agency_first_09
   - id: agency_first_09
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '넌 1129번. 됐지?'
     choices:
@@ -79,59 +88,73 @@ nodes:
       - text: '고객님, 차를 내올까요?'
         next: agency_first_10
   - id: agency_first_10
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '나 고객 아냐. 그리고 여기 물은 셀프야.'
     next: agency_first_11
   - id: agency_first_11
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '규칙 세 개. 한 번만 말해.'
     next: agency_first_12
   - id: agency_first_12
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '하나. 일은 게시판에서. 의뢰인은 임시 고객이야. 주인 아냐.'
     next: agency_first_13
   - id: agency_first_13
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '둘. 충전은 유료. 저기 코인 충전기. 0% 되면 수거차가 주워 가.'
     next: agency_first_14
   - id: agency_first_14
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '셋. 저장은 저 단말기에서만. 밖에서 꺼지면 그날 일은 없던 거야.'
     next: agency_first_15
   - id: agency_first_15
+    cut: cut_agency_oh
     speaker: 찰스
     text: '확인했습니다. 질문이 하나 있습니다. 정식 주인 등록은 어디서 합니까?'
     next: agency_first_16
   - id: agency_first_16
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '최종 면담. 아직 먼 얘기야. 일부터 해.'
     next: agency_first_17
   # --- 양식 0번: 컵라면 받침 ---
   - id: agency_first_17
+    cut: cut_agency_form_zero
     speaker: 내레이션
     text: '오 실장이 컵라면 뚜껑을 열었다. 라면 밑에 누런 서류 한 장이 깔려 있다.'
     next: agency_first_18
   - id: agency_first_18
+    cut: cut_agency_form_zero
     speaker: 찰스
     text: '고객님, 받침이 필요하시면 제 쟁반을 쓰십시오. 은도금입니다.'
     next: agency_first_19
   - id: agency_first_19
+    cut: cut_agency_form_zero
     speaker: 오 실장
     text: '됐어. 받침 있어.'
     next: agency_first_20
   - id: agency_first_20
+    cut: cut_agency_form_zero
     speaker: 찰스
     text: '그 서류 맨 위에 양식 0번이라고 적혀 있습니다. 나머지는 국물 자국에 가려져 있습니다.'
     next: agency_first_21
   - id: agency_first_21
+    cut: cut_agency_form_zero
     speaker: 오 실장
     text: '그거? 아무도 안 쓰는 양식. 컵라면 받침이야.'   # 캐논
     next: agency_first_22
   - id: agency_first_22
+    cut: cut_agency_form_zero
     speaker: 찰스
     text: '확인했습니다. 받침으로 쓰기에 적당한 두께입니다.'
     next: agency_first_23
   - id: agency_first_23
+    cut: cut_agency_oh
     speaker: 오 실장
     text: '...게시판 가 봐. 급한 거 하나 붙었어.'
     end: agency_hub
@@ -269,50 +292,62 @@ nodes:
     text: '오피스텔 12층, 1207호. 복도 센서등이 한 박자 늦게 켜진다.'
     next: job1_entrance_02
   - id: job1_entrance_02
+    cut: cut_job1_notice
     speaker: 환경
     text: '[택배 안내] 신형 냉장고 배송 예정: 화요일. 기존 제품 수거 동의: ☑'
     next: job1_entrance_03
   - id: job1_entrance_03
+    cut: cut_job1_notice
     speaker: 찰스
     text: '화요일입니다.'
     next: job1_entrance_04
   - id: job1_entrance_04
+    cut: cut_job1_notice
     speaker: 찰스
     text: '특이사항 없습니다. 화요일은 수거가 많은 요일입니다.'
     next: job1_entrance_05
   - id: job1_entrance_05
+    cut: cut_job1_door_open
     speaker: 내레이션
     text: '초인종을 누르기 전에 문이 열렸다.'
     next: job1_entrance_06
   - id: job1_entrance_06
+    cut: cut_job1_door_open
     speaker: 금나래
     text: '소개소에서 오신 거죠? 일찍 오셨네요.'
     next: job1_entrance_07
   - id: job1_entrance_07
+    cut: cut_job1_door_open
     speaker: 찰스
     text: '안녕하십니까, 고객님. 의뢰를 받고 왔습니다.'
     next: job1_entrance_08
   - id: job1_entrance_08
+    cut: cut_job1_door_open
     speaker: 내레이션
     text: '찰스가 90도로 허리를 숙였다. 등의 스티커가 나래 쪽을 향했다.'
     next: job1_entrance_09
   - id: job1_entrance_09
+    cut: cut_job1_door_open
     speaker: 금나래
     text: '...대형폐기물? 등에 그거 붙어 있는 거 알아요?'
     next: job1_entrance_10
   - id: job1_entrance_10
+    cut: cut_job1_door_open
     speaker: 찰스
     text: '알고 있습니다. 정식으로 납부한 것입니다.'   # 캐논 (러닝 개그)
     next: job1_entrance_11
   - id: job1_entrance_11
+    cut: cut_job1_door_open
     speaker: 금나래
     text: '아... 네. 명찰은, 언... 찰스? 언찰스 씨?'
     next: job1_entrance_12
   - id: job1_entrance_12
+    cut: cut_job1_door_open
     speaker: 찰스
     text: '찰스입니다. 앞의 두 글자는 미배정 표시입니다.'
     next: job1_entrance_13
   - id: job1_entrance_13
+    cut: cut_job1_door_open
     speaker: 금나래
     text: '그럼 찰스 씨. 들어오세요. 부엌은 저쪽인데, 못 가요.'
     end: job1_living_intro
@@ -329,10 +364,12 @@ nodes:
     text: '거실 겸 침실. 소파 겸 침대. 한쪽만 눌려 있다.'
     next: job1_living_02
   - id: job1_living_02
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '냉장고가 어젯밤부터 부엌 문을 안 열어 줘요. 잠금 기능 같은 건 없었는데.'
     next: job1_living_03
   - id: job1_living_03
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '케이크를 넣어 놨거든요. 어제 생일이었어요. 뭐, 별건 아니고.'
     choices:
@@ -346,14 +383,17 @@ nodes:
         affinity: {narae: "0"}
         next: job1_living_04c
   - id: job1_living_04a
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '...아, 고마워요. 올해는 하루 늦은 게 제일 빠르네요.'
     next: job1_living_05
   - id: job1_living_04b
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '냉장고 안이니까 상하진 않았을 거예요. 아마.'
     next: job1_living_05
   - id: job1_living_04c
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '괜찮아요. 저 원래 아침 안 먹... 아니, 오늘은 먹고 싶었는데.'
     next: job1_living_05
@@ -369,14 +409,17 @@ nodes:
     on_defeated: job1_living_07d
     on_depleted: junkyard_reboot_01
   - id: job1_living_07p
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '어? 걔가 뭘 비켜 가는 거 처음 봐요.'
     next: job1_living_08
   - id: job1_living_07d
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '...뒤집히면 혼자 못 일어나요. 이따 제가 세워 줄게요.'
     next: job1_living_08
   - id: job1_living_08
+    cut: cut_job1_narae_talk
     speaker: 금나래
     text: '부엌은 저기예요. 침대 옆 체중계는 밟지 마세요. 말이 많아요.'
     end: job1_living
@@ -424,46 +467,57 @@ scene: job1_kitchen_door
 trigger: 부엌 미닫이문 앞에서 확인 키
 nodes:
   - id: job1_kitchen_01
+    cut: cut_job1_kitchen_door
     speaker: 내레이션
     text: '부엌 미닫이문. 틈으로 호박빛이 샌다. 안쪽에서 무언가가 문을 버티고 있다.'
     next: job1_kitchen_02
   - id: job1_kitchen_02
+    cut: cut_job1_kitchen_door
     speaker: 환경
     text: '문 너머에서 기계음: "취사가 완료되었습니다."'
     next: job1_kitchen_03
   - id: job1_kitchen_03
+    cut: cut_job1_kitchen_door
     speaker: 금나래
     text: '밥솥이에요. 사흘째 보온이에요. 끌 시간이 없었어요.'
     next: job1_kitchen_04
   - id: job1_kitchen_04
+    cut: cut_job1_kitchen_door
     speaker: 내레이션
     text: '찰스가 문을 두 번 두드렸다. 정확히 두 번.'
     next: job1_kitchen_05
   - id: job1_kitchen_05
+    cut: cut_job1_kitchen_door
     speaker: 찰스
     text: '실례합니다. 소개소에서 왔습니다.'
     next: job1_kitchen_06
   - id: job1_kitchen_06
+    cut: cut_job1_kitchen_door
     speaker: 프로스티
     text: '소개소? 교체 기사구나! 나 수거하러 왔지!'
     next: job1_kitchen_07
   - id: job1_kitchen_07
+    cut: cut_job1_kitchen_door
     speaker: 찰스
     text: '아닙니다. 저는 교체되는 쪽입니다.'
     next: job1_kitchen_08
   - id: job1_kitchen_08
+    cut: cut_job1_kitchen_door
     speaker: 프로스티
     text: '...거짓말. 화요일에 새 게 온대. 나 주문 내역 다 봤어.'
     next: job1_kitchen_09
   - id: job1_kitchen_09
+    cut: cut_job1_kitchen_door
     speaker: 금나래
     text: '...그걸 봤구나.'
     next: job1_kitchen_10
   - id: job1_kitchen_10
+    cut: cut_job1_kitchen_door
     speaker: 프로스티
     text: '이 집에선 이제 아무것도 안 버려. 요거트도. 케이크도. 나도.'
     next: job1_kitchen_11
   - id: job1_kitchen_11
+    cut: cut_job1_kitchen_door
     speaker: 프로스티
     text: '들어와 봐. 들어올 수 있으면.'
     next: job1_kitchen_12
@@ -494,22 +548,27 @@ nodes:
     text: '프로스티 고객님, 감사합니다. 다만 저는 먹지 않습니다.'
     next: job1_end_p_03
   - id: job1_end_p_03
+    cut: cut_job1_cake
     speaker: 내레이션
     text: '작은 케이크 상자. 숫자 초 3과 4가 꽂혀 있다.'
     next: job1_end_p_04
   - id: job1_end_p_04
+    cut: cut_job1_cake
     speaker: 내레이션
     text: '찰스가 찬장에서 접시를 꺼냈다. 케이크를 옮겨 담고, 포크를 곁에 놓았다.'
     next: job1_end_p_05
   - id: job1_end_p_05
+    cut: cut_job1_cake
     speaker: 찰스
     text: '고객님. 하루 늦은 생일 케이크입니다. 아침 식사로 내겠습니다.'
     next: job1_end_p_06
   - id: job1_end_p_06
+    cut: cut_job1_cake
     speaker: 금나래
     text: '...누가 내 생일 케이크를 접시에 담아 준 거, 처음이에요.'   # 캐논
     next: job1_end_p_07
   - id: job1_end_p_07
+    cut: cut_job1_cake
     speaker: 금나래
     text: '아침이 케이크네요. 유통기한은 어제지만.'
     next: job1_choice_01
@@ -519,27 +578,33 @@ nodes:
 scene: job1_end_defeated
 nodes:
   - id: job1_end_d_01
+    cut: cut_job1_defeated
     set_flag: job1_frosty_defeated   # ⚑ 캐논: 제압 결말 호감도 0 (변화 없음)
     speaker: 내레이션
     text: '프로스티의 문이 힘없이 열렸다. 안쪽 불빛이 꺼졌다.'
     next: job1_end_d_02
   - id: job1_end_d_02
+    cut: cut_job1_defeated
     speaker: 내레이션
     text: '케이크는 은쟁반 모양대로 납작해져 있었다.'
     next: job1_end_d_03
   - id: job1_end_d_03
+    cut: cut_job1_defeated
     speaker: 금나래
     text: '고마워요. 어차피 화요일에 새 거 와요.'   # 캐논
     next: job1_end_d_04
   - id: job1_end_d_04
+    cut: cut_job1_defeated
     speaker: 찰스
     text: '특이사항 없습니다.'   # 캐논
     next: job1_end_d_05
   - id: job1_end_d_05
+    cut: cut_job1_defeated
     speaker: 내레이션
     text: '찰스가 쟁반을 닦았다. 평소보다 2초 길었다.'
     next: job1_end_d_06
   - id: job1_end_d_06
+    cut: cut_job1_defeated
     speaker: 금나래
     text: '아침은 편의점에서 먹을게요.'
     next: job1_choice_01
@@ -553,10 +618,12 @@ nodes:
 scene: job1_choice
 nodes:
   - id: job1_choice_01
+    cut: cut_job1_choice
     speaker: 내레이션
     text: '나래가 현관에서 택배 안내문을 떼어 왔다.'
     next: job1_choice_02
   - id: job1_choice_02
+    cut: cut_job1_choice
     speaker: 금나래
     text: '찰스 씨, 멀쩡한데 더 좋은 게 나오면… 바꾸는 게 맞죠?'   # 캐논
     choices:
@@ -571,47 +638,57 @@ nodes:
         next: job1_choice_c1
   # --- (a) 바꾼다 ---
   - id: job1_choice_a1
+    cut: cut_job1_choice
     set_flag: job1_choice_replace   # ⚑
     speaker: 금나래
     text: '...그렇죠. 맞아요. 다들 그렇게 해요.'
     next: job1_choice_a2
   - id: job1_choice_a2
+    cut: cut_job1_choice
     speaker: 내레이션
     text: '나래가 안도한 듯 웃었다. 웃음 말고는 아무것도 없었다.'
     next: job1_farewell_00
   # --- (b) 주문 취소 ---
   - id: job1_choice_b1
+    cut: cut_job1_choice
     set_flag: job1_choice_keep   # ⚑ 신형 주문 취소
     speaker: 금나래
     text: '생일을... 기억했다고요?'
     next: job1_choice_b2
   - id: job1_choice_b2
+    cut: cut_job1_choice
     speaker: 내레이션
     text: '나래가 휴대폰을 한참 보다가, 버튼 하나를 눌렀다.'
     next: job1_choice_b3
   - id: job1_choice_b3
+    cut: cut_job1_choice
     speaker: 환경
     text: '[알림] 고객님의 주문이 취소되었습니다.'
     next: job1_choice_b4
   - id: job1_choice_b4
+    cut: cut_job1_choice
     speaker: 찰스
     text: '특이사항 보고. 이 알림음을 들은 적이 있습니다. 그때는 해지였습니다.'
     next: job1_choice_b5
   - id: job1_choice_b5
+    cut: cut_job1_choice
     speaker: 금나래
     text: '...반품 수수료 아까워서 그러는 거예요. 그런 거예요.'
     next: job1_farewell_00
   # --- (c) 소개소 등록 ---
   - id: job1_choice_c1
+    cut: cut_job1_choice
     set_flag: frosty_registered   # ⚑ 소개소 카메오 조건
     speaker: 금나래
     text: '냉장고도 거기 등록돼요?'
     next: job1_choice_c2
   - id: job1_choice_c2
+    cut: cut_job1_choice
     speaker: 찰스
     text: '주인이 없는 것은 모두 분실물입니다. 저도 그렇습니다.'
     next: job1_choice_c3
   - id: job1_choice_c3
+    cut: cut_job1_choice
     speaker: 금나래
     text: '...그럼 부탁할게요. 걔, 좋은 데 갔으면 좋겠어요.'
     next: job1_farewell_00
@@ -677,18 +754,22 @@ nodes:
     text: '특이사항 보고. 돌아오는 길에 1207호 창문을 두 번 돌아봤습니다. 원인은 불명입니다.'
     next: agency_return_07
   - id: agency_return_07
+    cut: cut_agency_coffee
     speaker: 오 실장
     text: '감정은 접수 안 받아. ...자판기 커피는 받고.'   # 캐논
     next: agency_return_08
   - id: agency_return_08
+    cut: cut_agency_coffee
     speaker: 내레이션
     text: '오 실장이 자판기 커피 한 잔을 책상 끝에 놓았다.'
     next: agency_return_09
   - id: agency_return_09
+    cut: cut_agency_coffee
     speaker: 찰스
     text: '저는 마시지 못합니다.'
     next: agency_return_10
   - id: agency_return_10
+    cut: cut_agency_coffee
     speaker: 오 실장
     text: '알아. 받으라고.'
     next: agency_return_11
@@ -697,10 +778,12 @@ nodes:
     then: agency_return_12f
     else: agency_return_14
   - id: agency_return_12f
+    cut: cut_agency_unfrosty
     speaker: 내레이션
     text: '구석에 냉장고 한 대가 서 있다. 명찰: UN-FROSTY.'
     next: agency_return_13f
   - id: agency_return_13f
+    cut: cut_agency_unfrosty
     speaker: 프로스티
     text: '...유통기한은 아직 안 정했어.'
     next: agency_return_14

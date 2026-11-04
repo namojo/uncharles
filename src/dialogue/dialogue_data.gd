@@ -8,7 +8,7 @@ extends RefCounted
 ## (production/epics/uncharles/story-002-dialogue-affinity.md).
 ##
 ## Each node dictionary keeps its file fields (id, speaker, text, next, choices,
-## battle, on_*, condition, then, else, end, affinity, set_flag, action) and gains
+## battle, on_*, condition, then, else, end, affinity, set_flag, action, cut) and gains
 ## `scene` (its scene id) and `backdrop` (that scene's backdrop id, or "").
 
 const INDEX_PATH: String = "res://assets/data/dialogue/index.json"
