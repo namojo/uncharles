@@ -52,6 +52,25 @@
   .credits li { margin: 6px 0; }
   .play { display: inline-block; margin-top: 8px; background: var(--cyan); color: #0c0b12; font-weight: 700; text-decoration: none; padding: 12px 20px; border: 3px solid #0c0b12; box-shadow: 5px 5px 0 #0b0a10; }
   .play:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  .note { color: var(--dim); font-size: 16px; max-width: 46em; margin: 0 0 16px; }
+  .deck { background: var(--panel); border: 4px solid var(--steel); box-shadow: 8px 8px 0 #0b0a10; }
+  .stage { position: relative; background: #000; }
+  .stage img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .stage button { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 64px; font: inherit; font-size: 24px; font-weight: 700; color: var(--text); background: rgba(12, 11, 18, 0.72); border: 3px solid var(--band); cursor: pointer; }
+  .stage button:focus-visible { border-color: var(--cyan); outline: none; }
+  @media (hover: hover) { .stage button:hover { border-color: var(--cyan); } }
+  .stage .prev { left: 8px; } .stage .next { right: 8px; }
+  .cap { padding: 14px 16px 16px; border-top: 3px solid var(--band); min-height: 132px; }
+  .cap .kicker { display: inline-block; background: var(--band); color: var(--cyan); font-size: 13px; font-weight: 700; padding: 1px 8px; }
+  .cap .count { float: right; color: var(--dim); font-size: 14px; }
+  .cap b { display: block; font-size: clamp(18px, 2.8vw, 22px); margin: 8px 0 4px; }
+  .cap p { margin: 0; color: var(--dim); font-size: 15px; }
+  .thumbs { display: flex; gap: 6px; overflow-x: auto; padding: 10px; border-top: 3px solid var(--band); scrollbar-width: thin; }
+  .thumbs button { flex: none; padding: 0; border: 3px solid transparent; background: none; cursor: pointer; line-height: 0; }
+  .thumbs button[aria-current="true"] { border-color: var(--cyan); }
+  .thumbs button:focus-visible { border-color: var(--amber); outline: none; }
+  .thumbs img { width: 96px; height: 54px; object-fit: cover; opacity: 0.7; }
+  .thumbs button[aria-current="true"] img { opacity: 1; }
   button.theme { font: inherit; font-size: 14px; color: var(--text); background: var(--panel); border: 3px solid var(--band); padding: 8px 12px; min-height: 44px; cursor: pointer; }
   @media (max-width: 720px) {
     .chapters { grid-template-columns: 1fr; }
@@ -98,6 +117,23 @@
     <div><strong>증거가 닫는다</strong><p>"문법 검사 통과는 실행이 아니다." 스크린샷과 종료 코드가 남아야 한 단계가 끝난다.</p></div>
   </div>
 
+  <h2>아직 게임에 들어가지 않은 장면</h2>
+  <p class="note">이야기는 의뢰 3건과 엔딩 4종까지 설계했고, 장면마다 컷을 먼저 그렸습니다. 지금 플레이할 수 있는 건 프롤로그와 의뢰 1까지라서 나머지는 이 슬라이드에만 있습니다. 의뢰 2 대사 초안(약 900줄)도 써 두었지만 아직 게임 데이터로 옮기지 않았습니다.</p>
+  <section class="deck" id="deck" aria-roledescription="carousel" aria-label="게임에 들어가지 않은 장면 슬라이드">
+    <div class="stage">
+      <img id="slide-img" src="slides/01-key_art_cover.jpg" width="1280" height="720" alt="새벽 소개소 앞 빈 길에 쟁반을 든 찰스가 서 있다">
+      <button class="prev" id="slide-prev" type="button" aria-label="이전 장면">◀</button>
+      <button class="next" id="slide-next" type="button" aria-label="다음 장면">▶</button>
+    </div>
+    <div class="cap" aria-live="polite">
+      <span class="count" id="slide-count">1 / 15</span>
+      <span class="kicker" id="slide-kicker">표지</span>
+      <b id="slide-title">키 아트</b>
+      <p id="slide-text">새벽, 소개소 앞 빈 길. 쟁반을 든 찰스와 간판의 시안 불빛 하나. 이 게임에서 켜져 있는 것은 늘 한 군데뿐이다.</p>
+    </div>
+    <div class="thumbs" id="slide-thumbs" aria-label="장면 목록"></div>
+  </section>
+
   <h2>직접 해 보기</h2>
   <a class="play" href="../">Uncharles 플레이 (프롤로그 + 의뢰 1)</a>
 
@@ -138,6 +174,70 @@
     try { localStorage.setItem("making-theme", light ? "light" : "dark"); } catch (e) {}
   });
   mark();
+})();
+(function () {
+  var slides = [
+    ["key_art_cover", "표지", "키 아트", "새벽, 소개소 앞 빈 길. 쟁반을 든 찰스와 간판의 시안 불빛 하나. 이 게임에서 켜져 있는 것은 늘 한 군데뿐이다.", "새벽 소개소 앞 빈 길에 쟁반을 든 찰스가 서 있다"],
+    ["world_curb", "세계", "문 앞에 내놓인 로봇들", "가사 로봇이 정수기처럼 구독되는 시대. 반납 수수료가 대형폐기물 스티커 3,000원보다 비싸서, 다들 스티커를 붙여 문 앞에 내놓는다.", "비 오는 골목, 집집마다 문 앞에 로봇이 줄지어 앉아 있다"],
+    ["sera_gallery", "의뢰 2 · 진세라", "진열관", "왕년의 홈쇼핑 쇼호스트가 사는 언덕 위 저택. 게시판 공고는 \"업무: 가만히 있기. 눈 깜빡임 금지.\" 켜져 있는 것은 진열장 조명뿐이다.", "유리 진열장이 늘어선 긴 복도 가운데 찰스가 서 있다"],
+    ["yeongwon_standoff", "의뢰 2 · 클라이맥스", "보존 진열장 '영원'", "\"아끼는 건 절대 망가지지 않게.\" 그 설정 하나로 30년 동안 사랑받던 것들을 꺼진 채 보관해 온 유리관 AI. \"움직이는 것은 닳습니다. 들어오십시오.\"", "거대한 유리 진열장 앞에 작은 찰스가 마주 서 있다"],
+    ["sebastian_awake", "의뢰 2 · 설득 결말", "30년 만의 첫마디", "진열장 문이 열리고 첫 집사 로봇 세바스찬이 켜진다. \"마님, 차가 식었습니다.\" 세라는 웃다가 운다.", "먼지 쌓인 옛 집사 로봇이 차를 따르고, 세라가 웃으며 운다"],
+    ["sera_contract", "의뢰 2 · 선택", "평생 보증", "세라가 소유 증명서를 내민다. \"나한테 팔려요. 내 것이 되면 절대 안 버려요.\" 찰스는 서명할 수도, 진열장 문을 열어 두라고 할 수도 있다.", "세라가 증명서를 내밀고 찰스가 펜을 들고 있다"],
+    ["mado_house", "의뢰 3 · 마도식", "포스트잇의 집", "기억이 하루를 넘기지 못하는 은퇴한 로봇 공학자. 벽마다 \"가스 잠갔음(아마)\". 매일 아침 찰스는 자기소개를 하고, 박사는 도둑 신고를 한다.", "포스트잇과 발명품으로 뒤덮인 연구실 같은 거실"],
+    ["emotion_module", "의뢰 3 · 필수 장면", "그 모듈 내가 짰지", "\"CH-4? 그 감정 모듈 내가 짰지.\" 찰스가 묻는다. 제가 느끼는 이것은 진짜입니까. 박사의 대답: \"몰라. 나도 내 게 진짜인지 몰라.\"", "작업대 앞의 노박사와 그 곁에 선 찰스"],
+    ["chuoki_frame", "의뢰 3 · 클라이맥스", "디지털 액자 '추억이'", "박사가 매일 처음처럼 슬퍼하자, 5년 동안 사진을 고치며 \"사모님은 장 보러 가셨어요\"라고 말해 온 기억 보조 AI.", "어두운 거실 벽에서 웃는 할머니 사진을 띄운 액자"],
+    ["palm_memo", "의뢰 3 · 선택", "손바닥 메모", "기억은 못 해도 메모는 남는다. 박사의 호감도는 숫자가 아니라 손바닥에 적힌 한 줄로 보인다. \"찰스 — 옆에 앉아 준 놈\".", "글씨로 빼곡한 손바닥 위의 노란 포스트잇"],
+    ["final_interview", "최종 면담", "주인을 고르는 자리", "정식 주인 등록은 소개소 최종 면담에서만 할 수 있다. 테이블 위에는 늘 양식 0번, 아무도 쓰지 않는 컵라면 받침이 있다.", "소개소 책상 앞에서 오 실장과 마주 선 찰스"],
+    ["end_narae", "엔딩 · 금나래", "늦게 불 켜지는 집", "더 좋은 게 나와도 바뀌지 않는 곳. 밤늦게 창 하나에 불이 켜지고 나래가 말한다. \"다녀왔어.\" 찰스가 처음으로 '주인님'이라고 부른다.", "불 꺼진 고층 아파트에서 창 하나만 켜져 있다"],
+    ["end_sera", "엔딩 · 진세라", "문 열린 진열관", "세라가 저택을 움직이는 박물관으로 연다. 찰스는 진열되지 않고 관람객에게 차를 낸다. 진열장 문은 늘 열려 있다.", "관람객이 북적이는 진열관에서 찰스가 세라에게 차를 낸다"],
+    ["end_mado", "엔딩 · 마도식", "매일 처음 만나는 집", "어느 아침, 박사가 신고 전화를 내려놓는다. \"처음 보는데. 자네가 타 주는 차는 좋을 것 같군.\" 기억되지 않아도 매일 다시 고용되는 곳.", "포스트잇 가득한 부엌에서 찰스가 박사에게 차를 따른다"],
+    ["end_uncharles", "엔딩 · 독립", "UN-CHARLES", "양식 0번 소유자 칸에 자기 등록번호를 쓴다. 자판기 커피 두 잔 중 한 잔은 오 실장에게. \"나는 오늘 아무의 것도 아니다. 그래도, 켜져 있다.\"", "새벽 소개소 앞에서 찰스가 오 실장에게 커피를 건넨다"]
+  ];
+  var img = document.getElementById("slide-img");
+  var kicker = document.getElementById("slide-kicker");
+  var title = document.getElementById("slide-title");
+  var text = document.getElementById("slide-text");
+  var count = document.getElementById("slide-count");
+  var strip = document.getElementById("slide-thumbs");
+  function file(i, suffix) { return "slides/" + String(i + 1).padStart(2, "0") + "-" + slides[i][0] + suffix + ".jpg"; }
+  var thumbs = slides.map(function (s, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", (i + 1) + ". " + s[2]);
+    var t = document.createElement("img");
+    t.src = file(i, "-t"); t.alt = ""; t.width = 96; t.height = 54; t.loading = "lazy";
+    b.appendChild(t);
+    b.addEventListener("click", function () { show(i); });
+    strip.appendChild(b);
+    return b;
+  });
+  var cur = 0;
+  function show(i) {
+    cur = (i + slides.length) % slides.length;
+    var s = slides[cur];
+    img.src = file(cur, ""); img.alt = s[4];
+    kicker.textContent = s[1]; title.textContent = s[2]; text.textContent = s[3];
+    count.textContent = (cur + 1) + " / " + slides.length;
+    thumbs.forEach(function (b, k) { if (k === cur) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
+    var b = thumbs[cur];
+    strip.scrollTo({ left: b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2, behavior: "smooth" });
+    new Image().src = file((cur + 1) % slides.length, "");
+  }
+  document.getElementById("slide-prev").addEventListener("click", function () { show(cur - 1); });
+  document.getElementById("slide-next").addEventListener("click", function () { show(cur + 1); });
+  var deck = document.getElementById("deck");
+  deck.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") { show(cur - 1); e.preventDefault(); }
+    if (e.key === "ArrowRight") { show(cur + 1); e.preventDefault(); }
+  });
+  var x0 = null;
+  img.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  img.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) show(dx < 0 ? cur + 1 : cur - 1);
+  });
+  thumbs[0].setAttribute("aria-current", "true");
 })();
 </script>
 </body>
